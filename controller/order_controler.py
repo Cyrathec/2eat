@@ -45,6 +45,20 @@ class OrderController:
             logging.error("An Error occured (%s)" % str(e))
             raise e
 
+    # Search all orders from a specific client
+    def searchOrders(self, client):
+        logging.info("Search orders of %s" % client)
+        # Query database
+        with self._database_engine.new_session() as session:
+            dao = OrderDAO(session)
+            order = dao.getByClient(client)
+            return order.to_dict()
+
+####################################################################################################################################################
+#####                                                           Illogics functions                                                             #####
+#####                                               A order shouldn't be updated or deleted                                                    #####
+####################################################################################################################################################
+
     # Update a specific order by its id. data can contain: the address for the shippement, the restaurant id,
     # the client id and a list of products (all the products will be deleted before adding this list)
     def updateOrder(self, order_id, order_data):
@@ -62,12 +76,3 @@ class OrderController:
             dao = OrderDAO(session)
             order = dao.get(order_id)
             dao.delete(order)
-
-    # Search all orders from a specific client
-    def searchOrders(self, client):
-        logging.info("Search orders of %s" % client)
-        # Query database
-        with self._database_engine.new_session() as session:
-            dao = OrderDAO(session)
-            order = dao.getByClient(client)
-            return order.to_dict()

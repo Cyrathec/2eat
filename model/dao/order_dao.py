@@ -34,6 +34,11 @@ class OrderDAO(DAO):
         self._database_session.flush()
         return order
 
+####################################################################################################################################################
+#####                                                           Illogics functions                                                             #####
+#####                                               A order shouldn't be updated or deleted                                                    #####
+####################################################################################################################################################
+
     # Update an order
     @dao_error_handler
     def update(self, order: Order, data: dict):
