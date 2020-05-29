@@ -1,7 +1,7 @@
 from model.mapping import Base
 import uuid
 
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import *
 
 class Order(Base):
     __tablename__ = 'order'

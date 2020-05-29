@@ -1,10 +1,8 @@
 import logging
 import sys
 from model.database import DatabaseEngine
-from controller.person_controller import PersonController
-from controller.sport_controller import SportController
-
-from vue.root_frame import RootFrame
+from model.backet import Basket
+from controller.order_controller import OrderController
 
 def main():
 
@@ -18,24 +16,12 @@ def main():
     handler.setFormatter(formatter)
     root.addHandler(handler)
 
-    logging.info("Start BDS App")
+    logging.info("Starting 2eat")
 
     # Init db
     logging.info("Init database")
     database_engine = DatabaseEngine(url='sqlite:///database.db')
     database_engine.create_database()
-
-    # controller
-    person_controller = PersonController(database_engine)
-    sport_controller = SportController(database_engine)
-
-    # init vue
-    root = RootFrame(person_controller, sport_controller)
-    root.master.title("bds subscription app")
-    root.show_menu()
-
-    # start
-    root.mainloop()
 
 
 if __name__ == "__main__":
