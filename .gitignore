@@ -10,5 +10,4 @@ venv/*
 *.whl
 *.tar.gz
 *.zip
-*.db
 *.txt
