@@ -1,3 +1,16 @@
+# Projet INF3133 - GLPOO 
+
+## Start application
+
+```
+python main.py
+```
+
+## import dependencies
+```
+pip install -r requirements.txt
+```
+
 Groupe de 4-5 personnes maximum
 
 ● Réaliser un dossier de votre applicatif comprenant :
