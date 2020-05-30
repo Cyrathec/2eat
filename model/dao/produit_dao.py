@@ -1,34 +1,34 @@
-from model.mapping.sport import Sport
+from model.mapping.produit import Produit
 from model.dao.dao import DAO
 from model.dao.dao_error_handler import dao_error_handler
 
 
-class SportDAO(DAO):
+class ProduitDAO(DAO):
     """
     Sport Mapping DAO
     """
 
     @dao_error_handler
     def get(self, id):
-        return self._database_session.query(Sport).filter_by(id=id).one()
+        return self._database_session.query(Produit).filter_by(id=id).one()
 
     @dao_error_handler
     def get_all(self):
-        return self._database_session.query(Sport).order_by(Sport.name).all()
+        return self._database_session.query(Produit).order_by(Produit.name).all()
 
     @dao_error_handler
     def get_by_name(self, name: str):
-        return self._database_session.query(Sport).filter_by(name=name).one()
+        return self._database_session.query(Produit).filter_by(name=name).one()
 
     @dao_error_handler
     def create(self, data: dict):
-        sport = Sport(name=data.get('name'), description=data.get('description'))
-        self._database_session.add(sport)
+        produit = Produit(name=data.get('name'), description=data.get('description'))
+        self._database_session.add(produit)
         self._database_session.flush()
-        return sport
+        return produit
 
     @dao_error_handler
-    def update(self, sport: Sport, data: dict):
+    def update(self, sport: Produit, data: dict):
         if 'name' in data:
             sport.name = data['name']
         if 'description' in data:

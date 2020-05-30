@@ -1,26 +1,22 @@
 from tkinter import *
 
-from vue.menu_frame import MenuFrame
-from vue.member_frames.new_member_frame import NewMemberFrame
-from vue.member_frames.new_coach_frame import NewCoachFrame
-from vue.member_frames.list_members_frame import ListMembersFrame
-from vue.member_frames.profile_frame import ProfileFrame
+from vue.menu_restaurant import MenuFrame
+from vue.restaurant_frames.new_member_frame import NewMemberFrame
+from vue.restaurant_frames.new_coach_frame import NewCoachFrame
+from vue.restaurant_frames.list_restaurants_frame import ListRestaurantFrame
+from vue.restaurant_frames.profile_frame import ProfileFrame
 from vue.sport_frames.list_sports_frame import ListSportsFrame
 from vue.sport_frames.new_sport_frame import NewSportFrame
 from vue.sport_frames.sport_profile_frame import SportProfileFrame
 
 
 class RootFrame(Frame):
-    """
-    Member actions
-    help: http://www.xavierdupre.fr/app/teachpyx/helpsphinx/c_gui/tkinter.html
-    """
-
+    
     def __init__(self, person_controller, sport_controller, master=None):
         super().__init__(master)
         self._person_controller = person_controller
         self._sport_controller = sport_controller
-        self._menu_frame = MenuFrame(self)
+        self._menu_restaurant = MenuFrame(self)
         self._frames = []
 
     def new_member(self):
@@ -46,7 +42,7 @@ class RootFrame(Frame):
 
         # show members
         self.hide_menu()
-        list_frame = ListMembersFrame(self._person_controller, self, person_type='member')
+        list_frame = ListRestaurantFrame(self._person_controller, self, )
         self._frames.append(list_frame)
         list_frame.show()
         
@@ -54,7 +50,7 @@ class RootFrame(Frame):
 
         # show members
         self.hide_menu()
-        list_frame = ListMembersFrame(self._person_controller, self, person_type='coach')
+        list_frame = ListRestaurantFrame(self._person_controller, self, person_type='coach')
         self._frames.append(list_frame)
         list_frame.show()
 
@@ -88,10 +84,10 @@ class RootFrame(Frame):
         for frame in self._frames:
             frame.destroy()
         self._frames = []
-        self._menu_frame.show()
+        self._menu_restaurant.show()
 
     def hide_menu(self):
-        self._menu_frame.hide()
+        self._menu_restaurant.hide()
 
     def back(self):
         if len(self._frames) <= 1:

@@ -1,7 +1,7 @@
 import re
 import logging
 
-from model.dao.sport_dao import SportDAO
+from model.dao.produit_dao import ProduitDAO
 
 from exceptions import Error, InvalidData
 

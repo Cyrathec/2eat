@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 
 from exceptions import Error
-from vue.member_frames.new_person_frame import NewPersonFrame
+from vue.restaurant_frames.new_person_frame import NewPersonFrame
 
 
 class NewMemberFrame(NewPersonFrame):

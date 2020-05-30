@@ -2,7 +2,7 @@ import re
 import logging
 
 from model.dao.person_dao_fabric import PersonDAOFabric
-from model.dao.sport_dao import SportDAO
+from model.dao.produit_dao import ProduitDAO
 
 from exceptions import Error, InvalidData
 
@@ -16,23 +16,23 @@ class PersonController:
         self._database_engine = database_engine
 
     def list_people(self, person_type=None):
-        logging.info("Get people")
+        logging.info("Get restaurant")
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao(type=person_type)
+            dao = PersonDAOFabric(session).get_dao()
             members = dao.get_all()
             members_data = [member.to_dict() for member in members]
         return members_data
 
-    def get_person(self, person_id, person_type=None):
-        logging.info("Get person %s" % person_id)
+    def get_restaurant(self, restaurant_id, restaurant_type=None):
+        logging.info("Get restaurant %s" % restaurant_id)
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao(type=person_type)
-            member = dao.get(person_id)
+            dao = PersonDAOFabric(session).get_dao(type=restaurant_type)
+            member = dao.get(restaurant_id)
             member_data = member.to_dict()
         return member_data
 
     def get_member(self, member_id):
-        return self.get_person(member_id, person_type='member')
+        return self.get_restaurant(member_id, )
 
     def create_person(self, data, person_type=None):
         logging.info("Create member with data %s" % str(data))
@@ -81,7 +81,7 @@ class PersonController:
         with self._database_engine.new_session() as session:
             dao = PersonDAOFabric(session).get_dao()
             person = dao.get(person_id)
-            sport = SportDAO(session).get(sport_id)
+            sport = ProduitDAO(session).get(sport_id)
             person.add_sport(sport, level, session)
             return person.to_dict()
 
@@ -90,7 +90,7 @@ class PersonController:
         with self._database_engine.new_session() as session:
             dao = PersonDAOFabric(session).get_dao()
             person = dao.get(person_id)
-            sport = SportDAO(session).get(sport_id)
+            sport = ProduitDAO(session).get(sport_id)
             person.delete_sport(sport, session)
             return person.to_dict()
 
@@ -101,12 +101,12 @@ class PersonController:
             member = dao.get(member_id)
             dao.delete(member)
 
-    def search_person(self, firstname, lastname, person_type=None):
-        logging.info("Search person %s %s" % (firstname, lastname))
+    def search_restaurant(self, restaurant_name, person_type=None):
+        logging.info("Search restaurant %s" % (restaurant_name))
         # Query database
         with self._database_engine.new_session() as session:
             dao = PersonDAOFabric(session).get_dao(type=person_type)
-            member = dao.get_by_name(firstname, lastname)
+            member = dao.get_by_name(restaurant_name)
             return member.to_dict()
 
     def _check_member_data(self, data, update=False):
@@ -126,11 +126,8 @@ class PersonController:
 
     def _check_person_data(self, data, update=False):
         name_pattern = re.compile("^[\S-]{2,50}$")
-        email_pattern = re.compile("^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$")
         specs = {
-            'firstname': {"type": str, "regex": name_pattern},
-            'lastname': {"type": str, "regex": name_pattern},
-            'email': {"type": str, "regex": email_pattern}
+            'restaurant_name': {"type": str, "regex": name_pattern}  
         }
         self._check_data(data, specs, update=update)
 

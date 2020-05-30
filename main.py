@@ -31,7 +31,7 @@ def main():
 
     # init vue
     root = RootFrame(person_controller, sport_controller)
-    root.master.title("bds subscription app")
+    root.master.title("2eat app")
     root.show_menu()
 
     # start

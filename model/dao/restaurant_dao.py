@@ -1,29 +1,29 @@
-from model.mapping.person import Person
+from model.mapping.restaurant import Restaurant
 from model.dao.dao import DAO
 from model.dao.dao_error_handler import dao_error_handler
 
 
-class PersonDAO(DAO):
+class RestaurantDAO(DAO):
     """
     Person Mapping DAO
     """
 
-    def __init__(self, database_session, person_type=Person):
+    def __init__(self, database_session, restaurant_type=Restaurant):
         super().__init__(database_session)
-        self._person_type = person_type
+        self.restaurant_type = restaurant_type
 
     @dao_error_handler
     def get(self, id):
-        return self._database_session.query(self._person_type).filter_by(id=id).one()
+        return self._database_session.query(self.restaurant_type).filter_by(id=id).one()
 
     @dao_error_handler
     def get_all(self):
-        return self._database_session.query(self._person_type).order_by(self._person_type.firstname).all()
+        return self._database_session.query(self.restaurant_type).order_by(self.restaurant_type).all()
 
     @dao_error_handler
-    def get_by_name(self, firstname: str, lastname: str):
-        return self._database_session.query(self._person_type)\
-            .filter_by(firstname=firstname, lastname=lastname).one()
+    def get_by_name(self, restaurant_name: str):
+        return self._database_session.query(self.restaurant_type)\
+            .filter_by(restaurant_name=restaurant_name).one()
 
     @dao_error_handler
     def _update_address(self, member, address_data):
@@ -41,13 +41,10 @@ class PersonDAO(DAO):
                                address_data.get('country', 'FRANCE'))
 
     @dao_error_handler
-    def update(self, member: Person, data: dict):
+    def update(self, member: Restaurant, data: dict):
         if 'firstname' in data:
             member.firstname = data['firstname']
-        if 'lastname' in data:
-            member.lastname = data['lastname']
-        if 'email' in data:
-            member.email = data['email']
+       
         if 'address' in data:
             self._update_address(member, data['address'])
 
