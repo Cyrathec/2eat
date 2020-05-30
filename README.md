@@ -5,7 +5,7 @@
 ```
 python main.py
 ```
-test
+
 ## import dependencies
 ```
 pip install -r requirements.txt
