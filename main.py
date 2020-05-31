@@ -18,7 +18,7 @@ def main():
     handler.setFormatter(formatter)
     root.addHandler(handler)
 
-    logging.info("Start BDS App")
+    logging.info("Start 2eat App")
 
     # Init db
     logging.info("Init database")

@@ -12,5 +12,8 @@ class PersonDAOFabric:
     def get_dao(self, type=None):
         if type is None:
             return RestaurantDAO(self._database_session)
-
+        if type == "restaurant":
+            return RestaurantDAO(self._database_session)
+        else:
+             return RestaurantDAO(self._database_session)
     

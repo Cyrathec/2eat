@@ -18,7 +18,7 @@ class RestaurantDAO(DAO):
 
     @dao_error_handler
     def get_all(self):
-        return self._database_session.query(self.restaurant_type).order_by(self.restaurant_type).all()
+        return self._database_session.query(self.restaurant_type).order_by(self.restaurant_type.restaurant_name).all()
 
     @dao_error_handler
     def get_by_name(self, restaurant_name: str):

@@ -16,7 +16,7 @@ class PersonController:
         self._database_engine = database_engine
 
     def list_people(self, person_type=None):
-        logging.info("Get restaurant")
+        logging.info("Get restaurant n1")
         with self._database_engine.new_session() as session:
             dao = PersonDAOFabric(session).get_dao()
             members = dao.get_all()
