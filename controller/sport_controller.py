@@ -15,16 +15,16 @@ class SportController:
         self._database_engine = database_engine
 
     def list_sports(self):
-        logging.info("List sports")
+        logging.info("List products")
         with self._database_engine.new_session() as session:
-            sports = SportDAO(session).get_all()
+            sports = ProductDAO(session).get_all()
             sports_data = [sport.to_dict() for sport in sports]
         return sports_data
 
     def get_sport(self, sport_id):
         logging.info("Get sport %s" % sport_id)
         with self._database_engine.new_session() as session:
-            sport = SportDAO(session).get(sport_id)
+            sport = ProductDAO(session).get(sport_id)
             sport_data = sport.to_dict()
         return sport_data
 
@@ -34,7 +34,7 @@ class SportController:
         try:
             with self._database_engine.new_session() as session:
                 # Save member in database
-                dao = SportDAO(session)
+                dao = ProductDAO(session)
                 sport = dao.create(data)
                 sport_data = sport.to_dict()
                 return sport_data
@@ -46,7 +46,7 @@ class SportController:
     def update_sport(self, sport_id, sport_data):
         logging.info("Update sport %s with data: %s" % (sport_id, str(sport_data)))
         with self._database_engine.new_session() as session:
-            dao = SportDAO(session)
+            dao = ProductDAO(session)
             sport = dao.get(sport_id)
             sport = dao.update(sport, sport_data)
             return sport.to_dict()
@@ -54,7 +54,7 @@ class SportController:
     def delete_sport(self, sport_id):
         logging.info("Delete person %s" % sport_id)
         with self._database_engine.new_session() as session:
-            dao = SportDAO(session)
+            dao = ProductDAO(session)
             sport = dao.get(sport_id)
             dao.delete(sport)
 
@@ -62,7 +62,7 @@ class SportController:
         logging.info("Search sport %s" % name)
         # Query database
         with self._database_engine.new_session() as session:
-            dao = SportDAO(session)
+            dao = ProductDAO(session)
             sport = dao.get_by_name(name)
             return sport.to_dict()
 
