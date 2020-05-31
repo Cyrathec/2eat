@@ -2,7 +2,7 @@ import re
 import logging
 
 from model.dao.person_dao_fabric import PersonDAOFabric
-from model.dao.produit_dao import ProduitDAO
+from model.dao.product_dao import ProductDAO
 
 from exceptions import Error, InvalidData
 
@@ -81,7 +81,7 @@ class PersonController:
         with self._database_engine.new_session() as session:
             dao = PersonDAOFabric(session).get_dao()
             person = dao.get(person_id)
-            sport = ProduitDAO(session).get(sport_id)
+            sport = ProductDAO(session).get(sport_id)
             person.add_sport(sport, level, session)
             return person.to_dict()
 
@@ -90,7 +90,7 @@ class PersonController:
         with self._database_engine.new_session() as session:
             dao = PersonDAOFabric(session).get_dao()
             person = dao.get(person_id)
-            sport = ProduitDAO(session).get(sport_id)
+            sport = ProductDAO(session).get(sport_id)
             person.delete_sport(sport, session)
             return person.to_dict()
 

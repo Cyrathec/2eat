@@ -4,7 +4,7 @@ import uuid
 from sqlalchemy import Column, String, UniqueConstraint, ForeignKey
 from sqlalchemy.orm import relationship
 from model.mapping.address import Address
-from model.mapping.produit import ProduitAssociation
+from model.mapping.product import ProductAssociation
 from exceptions import ResourceNotFound
 
 
@@ -20,7 +20,7 @@ class Restaurant(Base):
     address_id = Column(String(36), ForeignKey("addresses.id"), nullable=True)
 
     address = relationship("Address", cascade="all,delete-orphan", single_parent=True)
-    produits = relationship("ProduitAssociation", back_populates="restaurant")
+    products = relationship("ProductAssociation", back_populates="restaurant")
 
     __table_args__ = (UniqueConstraint('restaurant_name'),)
     # https://docs.sqlalchemy.org/en/13/orm/inheritance.html
@@ -35,12 +35,12 @@ class Restaurant(Base):
             #"lastname": self.lastname,
             #"email": self.email,
             #"type": self.person_type,
-            "produits": []
+            "products": []
         }
-        for produit_associations in self.produits:
-            _data['produits'].append({
-                                    "id": produit_associations.produits.id,
-                                    "name": produit_associations.produits.name})
+        for product_associations in self.products:
+            _data['products'].append({
+                                    "id": product_associations.products.id,
+                                    "name": product_associations.products.name})
 
         if self.address is not None:
             _data['address'] = {
