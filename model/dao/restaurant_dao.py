@@ -42,8 +42,8 @@ class RestaurantDAO(DAO):
 
     @dao_error_handler
     def update(self, member: Restaurant, data: dict):
-        if 'firstname' in data:
-            member.firstname = data['firstname']
+        if 'restaurant_name' in data:
+            member.restaurant_name = data['restaurant_name']
        
         if 'address' in data:
             self._update_address(member, data['address'])
