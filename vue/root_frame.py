@@ -1,13 +1,14 @@
 from tkinter import *
 
 from vue.menu_frame import MenuFrame
-from vue.member_frames.new_member_frame import NewMemberFrame
-from vue.member_frames.new_coach_frame import NewCoachFrame
-from vue.member_frames.list_members_frame import ListMembersFrame
-from vue.member_frames.profile_frame import ProfileFrame
-from vue.sport_frames.list_sports_frame import ListSportsFrame
-from vue.sport_frames.new_sport_frame import NewSportFrame
-from vue.sport_frames.sport_profile_frame import SportProfileFrame
+
+from vue.restaurant_frames.list_restaurant_frame import ListRestaurantsFrame
+from vue.restaurant_frames.new_restaurant_frame import NewRestaurantFrame
+from vue.restaurant_frames.profile_frame import ProfileFrame
+
+from vue.product_frames.list_products_frame import ListProductsFrame
+from vue.product_frames.new_product_frame import NewProductFrame
+from vue.product_frames.product_profile_frame import ProductProfileFrame
 
 
 class RootFrame(Frame):
@@ -16,67 +17,52 @@ class RootFrame(Frame):
     help: http://www.xavierdupre.fr/app/teachpyx/helpsphinx/c_gui/tkinter.html
     """
 
-    def __init__(self, person_controller, sport_controller, master=None):
+    def __init__(self, restaurant_controller, product_controller, master=None):
         super().__init__(master)
-        self._person_controller = person_controller
-        self._sport_controller = sport_controller
+        self._restaurant_controller = restaurant_controller
+        self._product_controller = product_controller
         self._menu_frame = MenuFrame(self)
         self._frames = []
 
-    def new_member(self):
+    def new_restaurant(self):
         self.hide_frames()
-        # Show formular subscribe
-        subscribe_frame = NewMemberFrame(self._person_controller, self)
-        subscribe_frame.show()
-        self._frames.append(subscribe_frame)
+        # Show formular restaurant
+        new_restaurant_frame = NewRestaurantFrame(self._restaurant_controller, self)
+        new_restaurant_frame.show()
+        self._frames.append(new_restaurant_frame)
 
-    def new_coach(self):
+    def new_product(self):
         self.hide_frames()
-        subscribe_frame = NewCoachFrame(self._person_controller, self)
-        subscribe_frame.show()
-        self._frames.append(subscribe_frame)
+        new_product_frame = NewProductFrame(self._product_controller, self)
+        new_product_frame.show()
+        self._frames.append(new_product_frame)
 
-    def new_sport(self):
-        self.hide_frames()
-        new_sport_frame = NewSportFrame(self._sport_controller, self)
-        new_sport_frame.show()
-        self._frames.append(new_sport_frame)
-
-    def show_members(self):
-
-        # show members
+    def show_restaurants(self):
+        # show restaurants
         self.hide_menu()
-        list_frame = ListMembersFrame(self._person_controller, self, person_type='member')
-        self._frames.append(list_frame)
-        list_frame.show()
-        
-    def show_coaches(self):
-
-        # show members
-        self.hide_menu()
-        list_frame = ListMembersFrame(self._person_controller, self, person_type='coach')
+        list_frame = ListRestaurantsFrame(self._restaurant_controller, self)
         self._frames.append(list_frame)
         list_frame.show()
 
-    def show_profile(self, member_id):
-        member_data = self._person_controller.get_person(member_id)
+    def show_profile(self, restaurant_id):
+        restaurant_data = self._restaurant_controller.get_restaurant(restaurant_id)
 
         self.hide_frames()
-        profile_frame = ProfileFrame(self._person_controller, self._sport_controller, member_data, self)
+        profile_frame = ProfileFrame(self._restaurant_controller, self._product_controller, restaurant_data, self)
         self._frames.append(profile_frame)
         profile_frame.show()
 
-    def show_sports(self):
+    def show_products(self):
         self.hide_menu()
-        list_frame = ListSportsFrame(self._sport_controller, self)
+        list_frame = ListProductsFrame(self._product_controller, self)
         self._frames.append(list_frame)
         list_frame.show()
 
-    def show_sport(self, sport_id):
-        sport_data = self._sport_controller.get_sport(sport_id)
+    def show_product(self, product_id):
+        product_data = self._product_controller.get_product(product_id)
 
         self.hide_frames()
-        profile_frame = SportProfileFrame(self._sport_controller, sport_data, self)
+        profile_frame = ProductProfileFrame(self._product_controller, product_data, self)
         self._frames.append(profile_frame)
         profile_frame.show()
 

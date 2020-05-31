@@ -2,25 +2,21 @@
 from tkinter import *
 
 from vue.base_frame import BaseFrame
-from controller.person_controller import PersonController
+from controller.restaurant_controller import RestaurantController
 
 
-class ListMembersFrame(BaseFrame):
+class ListRestaurantsFrame(BaseFrame):
 
-    def __init__(self, person_controller: PersonController, root_frame: Frame, person_type: str = None):
+    def __init__(self, restaurant_controller: RestaurantController, root_frame: Frame):
         super().__init__(root_frame)
-        self._person_controller = person_controller
+        self._restaurant_controller = restaurant_controller
 
-        self._members = None
-        if person_type is None:
-            self._person_type = 'person'
-        else:
-            self._person_type = person_type
+        self._restaurants = None
         self._create_widgets()
 
     def _create_widgets(self):
 
-        self.title = Label(self, text="List %s:" % self._person_type.capitalize())
+        self.title = Label(self, text="List restaurants:")
         self.title.grid(row=0, column=0)
 
         # grille
@@ -32,11 +28,11 @@ class ListMembersFrame(BaseFrame):
         self.listbox.grid(row=1, column=0, columnspan=2, sticky='nsew')
 
         # Return bouton
-        self.new_person_button = Button(self, text="New %s" % self._person_type, command=self.new_person)
+        self.new_restaurant_button = Button(self, text="New restaurant", command=self.new_restaurant)
         self.show_profile_button = Button(self, text="Show profile", command=self.show_profile)
         self.menu = Button(self, text="Return", fg="red",
                            command=self.show_menu)
-        self.new_person_button.grid(row=3, sticky="nsew")
+        self.new_restaurant_button.grid(row=3, sticky="nsew")
         self.menu.grid(row=4, column=0, sticky="w")
 
     def on_select(self, event):
@@ -45,24 +41,21 @@ class ListMembersFrame(BaseFrame):
         else:
             self.show_profile_button.grid(row=3, column=1, sticky="nsew")
 
-    def new_person(self):
-        if self._person_type == 'member':
-            self._root_frame.new_member()
-        elif self._person_type == 'coach':
-            self._root_frame.new_coach()
+    def new_restaurant(self):
+        self._root_frame.new_restaurant()
 
     def show_profile(self):
         if len(self.listbox.curselection()) == 0:
             self.show_profile_button.grid_forget()
         else:
             index = int(self.listbox.curselection()[0])
-            member = self._members[index]
-            self._root_frame.show_profile(member['id'])
+            restaurant = self._restaurants[index]
+            self._root_frame.show_profile(restaurant['id'])
 
     def show(self):
-        self._members = self._person_controller.list_people(person_type=self._person_type)
+        self._restaurants = self._restaurant_controller.list_restaurants()
         self.listbox.delete(0, END)
-        for index, member in enumerate(self._members):
-            text = member['firstname'].capitalize() + ' ' + member['lastname'].capitalize()
+        for index, restaurant in enumerate(self._restaurants):
+            text = restaurant['name'] + ', ' + restaurant['address']
             self.listbox.insert(index, text)
         super().show()

@@ -1,15 +1,15 @@
 from tkinter import *
 from tkinter import messagebox
 
-from vue.sport_frames.sport_formular_frame import SportFormularFrame
+from vue.product_frames.product_formular_frame import ProductFormularFrame
 from exceptions import Error
 
 
-class NewSportFrame(SportFormularFrame):
+class NewProductFrame(ProductFormularFrame):
 
-    def __init__(self, sport_controller, master=None):
+    def __init__(self, product_controller, master=None):
         super().__init__(master)
-        self._sport_controller = sport_controller
+        self._product_controller = product_controller
 
     def create_widgets(self):
         super().create_widgets()
@@ -23,9 +23,8 @@ class NewSportFrame(SportFormularFrame):
     def valid(self):
         data = self.get_data()
         try:
-            sport_data = self._sport_controller.create_sport(data)
-            messagebox.showinfo("Success",
-                                "Sport %s created !" % sport_data['name'])
+            product_data = self._product_controller.create_product(data)
+            messagebox.showinfo("Success", "Product %s created !" % product_data['name'])
 
         except Error as e:
             messagebox.showerror("Error", str(e))
