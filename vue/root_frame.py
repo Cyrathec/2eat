@@ -42,7 +42,7 @@ class RootFrame(Frame):
 
         # show members
         self.hide_menu()
-        list_frame = ListRestaurantFrame(self._person_controller, self, )
+        list_frame = ListRestaurantFrame(self._person_controller, self,person_type='restaurant' )
         self._frames.append(list_frame)
         list_frame.show()
         

@@ -45,7 +45,13 @@ class ListRestaurantFrame(BaseFrame):
         else:
             self.show_profile_button.grid(row=3, column=1, sticky="nsew")
 
+    def new_person(self):
 
+        if self._person_type == 'restaurant':
+
+            self._root_frame.new_member()
+
+       
     def show_profile(self):
         if len(self.listbox.curselection()) == 0:
             self.show_profile_button.grid_forget()

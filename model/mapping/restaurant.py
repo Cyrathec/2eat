@@ -20,7 +20,7 @@ class Restaurant(Base):
     address_id = Column(String(36), ForeignKey("addresses.id"), nullable=True)
 
     address = relationship("Address", cascade="all,delete-orphan", single_parent=True)
-    products = relationship("ProductAssociation", back_populates="restaurant")
+    products = relationship("ProductAssociation", back_populates="restau")
 
     __table_args__ = (UniqueConstraint('restaurant_name'),)
     # https://docs.sqlalchemy.org/en/13/orm/inheritance.html

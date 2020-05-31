@@ -13,10 +13,10 @@ class Product(Base):
     # Sport is unique in database
     name = Column(String(50), nullable=False, unique=True)
     description = Column(String(512), nullable=True)
-    restaurant = relationship("Product", back_populates="products")
+    restau = relationship("ProductAssociation", back_populates="product")
 
     def __repr__(self):
-        return "<Sport %s>" % self.name
+        return "<product %s>" % self.name
 
     def to_dict(self):
         return {
@@ -28,7 +28,7 @@ class Product(Base):
 
 class ProductAssociation(Base):
     """
-    Association class between person and sport
+    Association class between restaurant and product
     help relationship: https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html
     """
     __tablename__ = 'product_associations'
@@ -36,5 +36,5 @@ class ProductAssociation(Base):
 
     restaurant_id = Column(String(36), ForeignKey('restaurant.id'), primary_key=True)
     product_id = Column(String(36), ForeignKey('products.id'), primary_key=True)
-    restaurant = relationship("Restaurant", back_populates="products")
-    product = relationship("Product", back_populates="restaurant")
+    restau = relationship("Restaurant", back_populates="products")
+    product = relationship("Product", back_populates="restau")
