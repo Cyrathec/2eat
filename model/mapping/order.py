@@ -1,7 +1,8 @@
 from model.mapping import Base
 import uuid
 
-from sqlalchemy import *
+from sqlalchemy import Table, Column, String, ForeignKey, UniqueConstraint
+from sqlalchemy.orm import relationship
 
 class Order(Base):
     __tablename__ = 'order'
