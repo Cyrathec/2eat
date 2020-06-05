@@ -2,21 +2,21 @@
 from tkinter import *
 
 from vue.base_frame import BaseFrame
-from controller.sport_controller import SportController
+from controller.product_controller import ProductController
 
 
-class ListSportsFrame(BaseFrame):
+class ListProductsFrame(BaseFrame):
 
-    def __init__(self, sport_controller: SportController, root_frame: Frame):
+    def __init__(self, product_controller: ProductController, root_frame: Frame):
         super().__init__(root_frame)
-        self._sport_controller = sport_controller
+        self._product_controller = product_controller
 
-        self._sports = None
+        self._products = None
         self._create_widgets()
 
     def _create_widgets(self):
 
-        self.title = Label(self, text="List sports:")
+        self.title = Label(self, text="List products:")
         self.title.grid(row=0, column=0)
 
         # grille
@@ -28,31 +28,31 @@ class ListSportsFrame(BaseFrame):
         self.listbox.grid(row=1, column=0, columnspan=2, sticky='nsew')
 
         # Return bouton
-        self.new_sport_button = Button(self, text="New Sport", command=self._root_frame.new_sport)
-        self.show_sport_button = Button(self, text="Show profile", command=self.show_sport)
+        self.new_product_button = Button(self, text="New Product", command=self._root_frame.new_product)
+        self.show_product_button = Button(self, text="Show profile", command=self.show_product)
         self.menu = Button(self, text="Return", fg="red",
                            command=self.show_menu)
-        self.new_sport_button.grid(row=3, sticky="nsew")
+        self.new_product_button.grid(row=3, sticky="nsew")
         self.menu.grid(row=4, column=0, sticky="w")
 
     def on_select(self, event):
         if len(self.listbox.curselection()) == 0:
-            self.show_sport_button.grid_forget()
+            self.show_product_button.grid_forget()
         else:
-            self.show_sport_button.grid(row=3, column=1, sticky="nsew")
+            self.show_product_button.grid(row=3, column=1, sticky="nsew")
 
-    def show_sport(self):
+    def show_product(self):
         if len(self.listbox.curselection()) == 0:
-            self.show_sport_button.grid_forget()
+            self.show_product_button.grid_forget()
         else:
             index = int(self.listbox.curselection()[0])
-            sport = self._sports[index]
-            self._root_frame.show_sport(sport['id'])
+            product = self._products[index]
+            self._root_frame.show_product(product['id'])
 
     def show(self):
-        self._sports = self._sport_controller.list_sports()
+        self._products = self._product_controller.list_products()
         self.listbox.delete(0, END)
-        for index, sport in enumerate(self._sports):
-            text = sport['name'].capitalize()
+        for index, product in enumerate(self._products):
+            text = "{} ({}€)".format(product['name'].capitalize(), product['price'])
             self.listbox.insert(index, text)
         super().show()

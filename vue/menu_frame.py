@@ -8,13 +8,13 @@ class MenuFrame(BaseFrame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.title = Label(self, text="Welcome ")
-      
-        self.restaurant = Button(self, text="restaurant", width=30, command=self._root_frame.show_members)
-      
+        self.title = Label(self, text="Welcome in 2eat App")
+        self.restaurants = Button(self, text="Restaurants", width=30, command=self._root_frame.show_restaurants)
+        self.products = Button(self, text="Products", width=30, command=self._root_frame.show_products)
         self.quit = Button(self, text="QUIT", fg="red", width=30,
                            command=self.quit)
         self.title.pack(side="top")
-       
-        self.restaurant.pack()
+        
+        self.restaurants.pack()
+        self.products.pack()
         self.quit.pack(side="bottom")

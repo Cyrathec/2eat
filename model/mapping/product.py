@@ -1,40 +1,24 @@
 from model.mapping import Base
 import uuid
 
-from sqlalchemy import Column, String, UniqueConstraint, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, UniqueConstraint, ForeignKey
 from sqlalchemy.orm import relationship
 
-
 class Product(Base):
-    __tablename__ = 'products'
+    __tablename__ = 'Product'
 
-    id = Column(String(36), default=str(uuid.uuid4()), primary_key=True)
+    id = Column(Integer, primary_key=True)
 
     # Sport is unique in database
     name = Column(String(50), nullable=False, unique=True)
-    description = Column(String(512), nullable=True)
-    restau = relationship("ProductAssociation", back_populates="product")
+    price = Column(Float, nullable=False)
 
     def __repr__(self):
-        return "<product %s>" % self.name
+        return "<Product %s %0.2f>" % (self.name, self.price)
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
-            "Price": self.description
+            "price": self.price
         }
-
-
-class ProductAssociation(Base):
-    """
-    Association class between restaurant and product
-    help relationship: https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html
-    """
-    __tablename__ = 'product_associations'
-    __table_args__ = (UniqueConstraint('restaurant_id', 'product_id'),)
-
-    restaurant_id = Column(String(36), ForeignKey('restaurant.id'), primary_key=True)
-    product_id = Column(String(36), ForeignKey('products.id'), primary_key=True)
-    restau = relationship("Restaurant", back_populates="products")
-    product = relationship("Product", back_populates="restau")

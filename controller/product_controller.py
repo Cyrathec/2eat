@@ -6,71 +6,71 @@ from model.dao.product_dao import ProductDAO
 from exceptions import Error, InvalidData
 
 
-class SportController:
+class ProductController:
     """
-    Sport actions
+    Product actions
     """
 
     def __init__(self, database_engine):
         self._database_engine = database_engine
 
-    def list_sports(self):
+    def list_products(self):
         logging.info("List products")
         with self._database_engine.new_session() as session:
-            sports = ProductDAO(session).get_all()
-            sports_data = [sport.to_dict() for sport in sports]
-        return sports_data
+            products = ProductDAO(session).get_all()
+            products_data = [product.to_dict() for product in products]
+        return products_data
 
-    def get_sport(self, sport_id):
-        logging.info("Get sport %s" % sport_id)
+    def get_product(self, product_id):
+        logging.info("Get product %s" % product_id)
         with self._database_engine.new_session() as session:
-            sport = ProductDAO(session).get(sport_id)
-            sport_data = sport.to_dict()
-        return sport_data
+            product = ProductDAO(session).get(product_id)
+            product_data = product.to_dict()
+        return product_data
 
-    def create_sport(self, data):
-        logging.info("Create sport with data %s" % str(data))
-        self._check_sport_data(data)
+    def create_product(self, data):
+        logging.info("Create product with data %s" % str(data))
+        self._check_product_data(data)
         try:
             with self._database_engine.new_session() as session:
-                # Save member in database
+                # Save product in database
                 dao = ProductDAO(session)
-                sport = dao.create(data)
-                sport_data = sport.to_dict()
-                return sport_data
+                product = dao.create(data)
+                product_data = product.to_dict()
+                return product_data
         except Error as e:
             # log error
             logging.error("An Error occured (%s)" % str(e))
             raise e
 
-    def update_sport(self, sport_id, sport_data):
-        logging.info("Update sport %s with data: %s" % (sport_id, str(sport_data)))
+    def update_product(self, product_id, product_data):
+        logging.info("Update product %s with data: %s" % (product_id, str(product_data)))
         with self._database_engine.new_session() as session:
             dao = ProductDAO(session)
-            sport = dao.get(sport_id)
-            sport = dao.update(sport, sport_data)
-            return sport.to_dict()
+            product = dao.get(product_id)
+            product = dao.update(product, product_data)
+            return product.to_dict()
 
-    def delete_sport(self, sport_id):
-        logging.info("Delete person %s" % sport_id)
+    def delete_product(self, product_id):
+        logging.info("Delete product %s" % product_id)
         with self._database_engine.new_session() as session:
             dao = ProductDAO(session)
-            sport = dao.get(sport_id)
-            dao.delete(sport)
+            product = dao.get(product_id)
+            dao.delete(product)
 
-    def search_sport(self, name):
-        logging.info("Search sport %s" % name)
+    def search_product(self, name):
+        logging.info("Search product %s" % name)
         # Query database
         with self._database_engine.new_session() as session:
             dao = ProductDAO(session)
-            sport = dao.get_by_name(name)
-            return sport.to_dict()
+            product = dao.get_by_name(name)
+            return product.to_dict()
 
-    def _check_sport_data(self, data, update=False):
+    def _check_product_data(self, data, update=False):
         name_pattern = re.compile("^[\S-]{2,50}$")
         specs = {
             "name": {"type": str, "regex": name_pattern},
-            "description": {"type": str}
+            "price": {"type": float}
         }
         self._check_data(data, specs, update=update)
 
