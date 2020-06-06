@@ -50,7 +50,9 @@ class ListRestaurantsFrame(BaseFrame):
         else:
             index = int(self.listbox.curselection()[0])
             restaurant = self._restaurants[index]
-            self._root_frame.show_profile(restaurant['id'])
+            #self._root_frame.show_profile(restaurant['id'])
+            self.products = Button(self, text="Products", width=30, command=self._root_frame.show_profile(restaurant['id']))
+            #self.products.pack()
 
     def show(self):
         self._restaurants = self._restaurant_controller.list_restaurants()
