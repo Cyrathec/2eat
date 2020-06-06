@@ -47,7 +47,7 @@ class ListProductsFrame(BaseFrame):
         else:
             index = int(self.listbox.curselection()[0])
             product = self._products[index]
-            self._root_frame.show_product(product['id'])
+            self._root_frame.show_product(product['id'] for product in self._restaurant['products'])
 
     def show(self):
         self._products = self._product_controller.list_products()

@@ -28,11 +28,11 @@ class ListRestaurantsFrame(BaseFrame):
         self.listbox.grid(row=1, column=0, columnspan=2, sticky='nsew')
 
         # Return bouton
-        self.new_restaurant_button = Button(self, text="New restaurant", command=self.new_restaurant)
-        self.show_profile_button = Button(self, text="Show profile", command=self.show_profile)
+       # self.new_restaurant_button = Button(self, text="New restaurant", command=self.new_restaurant)
+        self.show_profile_button = Button(self, text="Show products", command=self.show_profile)
         self.menu = Button(self, text="Return", fg="red",
                            command=self.show_menu)
-        self.new_restaurant_button.grid(row=3, sticky="nsew")
+       # self.new_restaurant_button.grid(row=3, sticky="nsew")
         self.menu.grid(row=4, column=0, sticky="w")
 
     def on_select(self, event):
