@@ -7,11 +7,12 @@ from controller.product_controller import ProductController
 
 class ListProductsFrame(BaseFrame):
 
-    def __init__(self, product_controller: ProductController, root_frame: Frame):
+    def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None):
         super().__init__(root_frame)
         self._product_controller = product_controller
 
         self._products = None
+        self._restaurant = restaurant
         self._create_widgets()
 
     def _create_widgets(self):
@@ -50,7 +51,10 @@ class ListProductsFrame(BaseFrame):
             self._root_frame.show_product(product['id'])
 
     def show(self):
-        self._products = self._product_controller.list_products()
+        if self._restaurant is None:
+            self._products = self._product_controller.list_products()
+        else:
+            self._products = self._restaurant['products']
         self.listbox.delete(0, END)
         for index, product in enumerate(self._products):
             text = "{} ({}€)".format(product['name'].capitalize(), product['price'])

@@ -58,6 +58,12 @@ class RootFrame(Frame):
         self._frames.append(list_frame)
         list_frame.show()
 
+    def show_products_restaurant(self, restaurant):
+        self.hide_frames()
+        list_frame = ListProductsFrame(self._product_controller, self, restaurant)
+        self._frames.append(list_frame)
+        list_frame.show()
+
     def show_product(self, product_id):
         product_data = self._product_controller.get_product(product_id)
 
