@@ -1,4 +1,5 @@
 from model.mapping.product import Product
+from model.mapping.restaurant import Restaurant
 from model.dao.dao import DAO
 from model.dao.dao_error_handler import dao_error_handler
 

@@ -25,6 +25,7 @@ class RootFrame(Frame):
         self._frames = []
 
     def new_restaurant(self):
+<<<<<<< HEAD
         self.hide_frames()
         # Show formular restaurant
         new_restaurant_frame = NewRestaurantFrame(self._restaurant_controller, self)
@@ -44,6 +45,27 @@ class RootFrame(Frame):
         self._frames.append(list_frame)
         list_frame.show()
 
+=======
+        self.hide_frames()
+        # Show formular restaurant
+        new_restaurant_frame = NewRestaurantFrame(self._restaurant_controller, self)
+        new_restaurant_frame.show()
+        self._frames.append(new_restaurant_frame)
+
+    def new_product(self):
+        self.hide_frames()
+        new_product_frame = NewProductFrame(self._product_controller, self)
+        new_product_frame.show()
+        self._frames.append(new_product_frame)
+
+    def show_restaurants(self):
+        # show restaurants
+        self.hide_menu()
+        list_frame = ListRestaurantsFrame(self._restaurant_controller, self)
+        self._frames.append(list_frame)
+        list_frame.show()
+
+>>>>>>> 87c409e4f1f69b91677a47cd4c93f2ec88713dce
     def show_profile(self, restaurant_id):
         restaurant_data = self._restaurant_controller.get_restaurant(restaurant_id)
 
@@ -55,6 +77,12 @@ class RootFrame(Frame):
     def show_products(self):
         self.hide_menu()
         list_frame = ListProductsFrame(self._product_controller, self)
+        self._frames.append(list_frame)
+        list_frame.show()
+
+    def show_products_restaurant(self, restaurant):
+        self.hide_frames()
+        list_frame = ListProductsFrame(self._product_controller, self, restaurant)
         self._frames.append(list_frame)
         list_frame.show()
 
