@@ -30,7 +30,7 @@ class OrderController:
         return order_data
 
     # Create an order with the data that should contain; the address for the shipment,
-    # the restaurant id, the client id and a list of products
+    # the restaurant id, the client id, the shipment address and a list of products
     def createOrder(self, data):
         logging.info("Create order with data %s" % str(data))
         try:
@@ -46,12 +46,20 @@ class OrderController:
             raise e
 
     # Search all orders from a specific client
-    def searchOrders(self, client):
+    def searchOrdersByClient(self, client):
         logging.info("Search orders of %s" % client)
         # Query database
         with self._database_engine.new_session() as session:
             dao = OrderDAO(session)
             order = dao.getByClient(client)
+            return order.to_dict()
+
+    def searchOrdersByRestaurant(self, restaurant):
+        logging.info("Search orders of %s" % restaurant)
+        # Query database
+        with self._database_engine.new_session() as session:
+            dao = OrderDAO(session)
+            order = dao.getByRestaurant(restaurant)
             return order.to_dict()
 
 ####################################################################################################################################################

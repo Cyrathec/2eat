@@ -23,6 +23,11 @@ class OrderDAO(DAO):
     def getByClient(self, client: str):
         return self._database_session.query(Order).filter_by(client=client).order_by(Order.id).all()
 
+    # Get all orders from a specific restaurant
+    @dao_error_handler
+    def getByRestaurant(self, restaurant: str):
+        return self._database_session.query(Order).filter_by(restaurant=restaurant).order_by(Order.id).all()
+
     # Create an order
     @dao_error_handler
     def create(self, data: dict):

@@ -11,19 +11,17 @@ class OrderProductAssociation(Base):
 	Order_id = Column(Integer, ForeignKey('Order.id'), primary_key=True)
 	Product_id = Column(Integer, ForeignKey('Product.id'), primary_key=True)
 
-	product = relationship("Product")
-
 
 class Order(Base):
     __tablename__ = 'Order'
 
     id = Column(Integer, primary_key=True)
 
-    restaurant = Column(Integer, ForeignKey('Restaurant.id'))                           # ForeignKey to the Restaurant id
-    client = Column(Integer, ForeignKey('Person.id'))                                   # ForeignKey to the client id
-    address = Column(String(512), nullable=False)                                       # Shipment address
-    products = relationship("OrderProductAssociation")                                  # List of the products that will be shipped
-    price = Column(Float(), nullable=False)                                             # Total price of the order
+    restaurant = Column(Integer, ForeignKey('Restaurant.id'))                                       # ForeignKey to the Restaurant id
+    client = Column(Integer, nullable=False) # ForeignKey('Person.id'))                             # ForeignKey to the client id
+    address = Column(String(512), nullable=False)                                                   # Shipment address
+    products = relationship("Product", secondary="OrderProductAssociation", backref="Order")        # List of the products that will be shipped
+    price = Column(Float(), nullable=False)                                                         # Total price of the order
 
     def __repr__(self):
         return "<Order(%d, %s, %f)>" % (self.id, self.address, self.price)
