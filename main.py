@@ -2,8 +2,6 @@ import logging
 import sys
 from model.database import DatabaseEngine
 from controller.person_controller import PersonController
-from controller.sport_controller import SportController
-
 from vue.root_frame import RootFrame
 
 def main():
@@ -27,10 +25,9 @@ def main():
 
     # controller
     person_controller = PersonController(database_engine)
-    sport_controller = SportController(database_engine)
 
     # init vue
-    root = RootFrame(person_controller, sport_controller)
+    root = RootFrame(person_controller)
     root.master.title("bds subscription app")
     root.show_menu()
 

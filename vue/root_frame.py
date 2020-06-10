@@ -2,12 +2,8 @@ from tkinter import *
 
 from vue.menu_frame import MenuFrame
 from vue.member_frames.new_member_frame import NewMemberFrame
-from vue.member_frames.new_coach_frame import NewCoachFrame
 from vue.member_frames.list_members_frame import ListMembersFrame
 from vue.member_frames.profile_frame import ProfileFrame
-from vue.sport_frames.list_sports_frame import ListSportsFrame
-from vue.sport_frames.new_sport_frame import NewSportFrame
-from vue.sport_frames.sport_profile_frame import SportProfileFrame
 
 
 class RootFrame(Frame):
@@ -16,10 +12,9 @@ class RootFrame(Frame):
     help: http://www.xavierdupre.fr/app/teachpyx/helpsphinx/c_gui/tkinter.html
     """
 
-    def __init__(self, person_controller, sport_controller, master=None):
+    def __init__(self, person_controller, master=None):
         super().__init__(master)
         self._person_controller = person_controller
-        self._sport_controller = sport_controller
         self._menu_frame = MenuFrame(self)
         self._frames = []
 
@@ -30,17 +25,6 @@ class RootFrame(Frame):
         subscribe_frame.show()
         self._frames.append(subscribe_frame)
 
-    def new_coach(self):
-        self.hide_frames()
-        subscribe_frame = NewCoachFrame(self._person_controller, self)
-        subscribe_frame.show()
-        self._frames.append(subscribe_frame)
-
-    def new_sport(self):
-        self.hide_frames()
-        new_sport_frame = NewSportFrame(self._sport_controller, self)
-        new_sport_frame.show()
-        self._frames.append(new_sport_frame)
 
     def show_members(self):
 
@@ -50,35 +34,19 @@ class RootFrame(Frame):
         self._frames.append(list_frame)
         list_frame.show()
         
-    def show_coaches(self):
-
-        # show members
-        self.hide_menu()
-        list_frame = ListMembersFrame(self._person_controller, self, person_type='coach')
-        self._frames.append(list_frame)
-        list_frame.show()
+   
 
     def show_profile(self, member_id):
         member_data = self._person_controller.get_person(member_id)
 
         self.hide_frames()
-        profile_frame = ProfileFrame(self._person_controller, self._sport_controller, member_data, self)
+        profile_frame = ProfileFrame(self._person_controller, member_data, self)
         self._frames.append(profile_frame)
         profile_frame.show()
 
-    def show_sports(self):
-        self.hide_menu()
-        list_frame = ListSportsFrame(self._sport_controller, self)
-        self._frames.append(list_frame)
-        list_frame.show()
+ 
 
-    def show_sport(self, sport_id):
-        sport_data = self._sport_controller.get_sport(sport_id)
-
-        self.hide_frames()
-        profile_frame = SportProfileFrame(self._sport_controller, sport_data, self)
-        self._frames.append(profile_frame)
-        profile_frame.show()
+  
 
     def hide_frames(self):
         for frame in self._frames:

@@ -14,7 +14,7 @@ class MemberDAO(PersonDAO):
     @dao_error_handler
     def create(self, data: dict):
         member = Member(firstname=data.get('firstname'), lastname=data.get('lastname'), email=data.get('email'),
-                        medical_certificate=data.get('medical_certificate', False))
+                        medical_certificate=data.get('medical_certificate', False), password=data.get('password'))
         if 'address' in data.keys():
             address = data['address']
             member.set_address(address['street'], address['postal_code'], address['city'],

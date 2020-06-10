@@ -15,7 +15,5 @@ class PersonDAOFabric:
 
         if type == 'member':
             return MemberDAO(self._database_session)
-        elif type == 'coach':
-            return CoachDAO(self._database_session)
         else:
             return PersonDAO(self._database_session)
