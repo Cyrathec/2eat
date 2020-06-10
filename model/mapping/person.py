@@ -4,7 +4,6 @@ import uuid
 from sqlalchemy import Column, String, UniqueConstraint, ForeignKey
 from sqlalchemy.orm import relationship
 from model.mapping.address import Address
-from model.mapping.sport import SportAssociation
 from exceptions import ResourceNotFound
 
 
@@ -18,9 +17,9 @@ class Person(Base):
     email = Column(String(256), nullable=False)
     person_type = Column(String(50), nullable=False)
     address_id = Column(String(36), ForeignKey("addresses.id"), nullable=True)
+    password = Column(String(255), nullable=False)
 
     address = relationship("Address", cascade="all,delete-orphan", single_parent=True)
-    sports = relationship("SportAssociation", back_populates="person")
 
     __table_args__ = (UniqueConstraint('firstname', 'lastname'),)
     # https://docs.sqlalchemy.org/en/13/orm/inheritance.html
@@ -38,13 +37,9 @@ class Person(Base):
             "firstname": self.firstname,
             "lastname": self.lastname,
             "email": self.email,
-            "type": self.person_type,
-            "sports": []
+            "type": self.person_type
         }
-        for sport_association in self.sports:
-            _data['sports'].append({"level": sport_association.level,
-                                    "id": sport_association.sport.id,
-                                    "name": sport_association.sport.name})
+        
 
         if self.address is not None:
             _data['address'] = {
@@ -58,19 +53,5 @@ class Person(Base):
     def set_address(self, street: str, postal_code: str, city: int, country: str = 'FRANCE'):
         self.address = Address(street=street, city=city, postal_code=postal_code, country=country)
 
-    def add_sport(self, sport, level, session):
-        asoociation = SportAssociation(level=level)
-        asoociation.sport = sport
-        self.sports.append(asoociation)
-        session.flush()
 
-    def delete_sport(self, sport, session):
-        sport_association = None
-        for association in self.sports:
-            if association.sport == sport:
-                sport_association = association
-                break
-        if sport_association is not None:
-            self.sports.remove(sport_association)
-            session.delete(sport_association)
-            session.flush()
+    

@@ -2,7 +2,6 @@ import re
 import logging
 
 from model.dao.person_dao_fabric import PersonDAOFabric
-from model.dao.sport_dao import SportDAO
 
 from exceptions import Error, InvalidData
 
@@ -52,8 +51,6 @@ class PersonController:
     def create_member(self, data):
         return self.create_person(data, 'member')
 
-    def create_coach(self, data):
-        return self.create_person(data, 'coach')
 
     def _update_person(self, member_id, member_data, person_type=None):
         logging.info("Update %s with data: %s" % (member_id, str(member_data)))
@@ -72,27 +69,8 @@ class PersonController:
         self._check_member_data(data, update=True)
         return self._update_person(member_id, data, person_type='member')
 
-    def update_coach(self, member_id, data):
-        self._check_coach_data(data, update=True)
-        return self._update_person(member_id, data, person_type='coach')
 
-    def add_sport_person(self, person_id, sport_id, level):
-        logging.info("Add sport %s to person %s" % (sport_id, person_id))
-        with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao()
-            person = dao.get(person_id)
-            sport = SportDAO(session).get(sport_id)
-            person.add_sport(sport, level, session)
-            return person.to_dict()
-
-    def delete_sport_person(self, person_id, sport_id):
-        logging.info("Delete sport %s from user %s" % (person_id, sport_id))
-        with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao()
-            person = dao.get(person_id)
-            sport = SportDAO(session).get(sport_id)
-            person.delete_sport(sport, session)
-            return person.to_dict()
+   
 
     def delete_person(self, member_id, person_type=None):
         logging.info("Delete person %s" % member_id)
@@ -116,13 +94,7 @@ class PersonController:
         }
         self._check_data(data, specs, update=update)
 
-    def _check_coach_data(self, data, update=False):
-        self._check_person_data(data, update=update)
-        specs = {
-            'degree': {"type": str},
-            'certificate': {"type": str}
-        }
-        self._check_data(data, specs, update=update)
+ 
 
     def _check_person_data(self, data, update=False):
         name_pattern = re.compile("^[\S-]{2,50}$")
@@ -130,7 +102,8 @@ class PersonController:
         specs = {
             'firstname': {"type": str, "regex": name_pattern},
             'lastname': {"type": str, "regex": name_pattern},
-            'email': {"type": str, "regex": email_pattern}
+            'email': {"type": str, "regex": email_pattern},
+            'password': {"type": str, "regex": name_pattern}
         }
         self._check_data(data, specs, update=update)
 
