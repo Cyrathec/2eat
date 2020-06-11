@@ -16,13 +16,26 @@ class Basket():
     
     # Delete a product from the basket
     def delProduct(self, product: dict):
-        for p in products:
+        i = 0
+        for p in self.products:
             if p == product:
-                self.products.pop(p)
-        self.price -= product['price']
+                self.products.pop(i)
+                self.price -= product['price']
+            i += 1
 
-    def toDict():
+    # Update the restaurant id
+    def updateRestaurant(self, restaurant: str):
+        self.restaurant = restaurant
+        self.products.clear()
+        self.price = 0
+
+    # Update the shipment address
+    def updateAddress(self, address: str):
+        self.address = address
+
+    def toDict(self):
         return {
+            "id": self.id,
             "restaurant": self.restaurant,
             "client": self.client,
             "address": self.address,

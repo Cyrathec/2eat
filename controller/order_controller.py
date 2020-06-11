@@ -18,7 +18,7 @@ class OrderController:
         logging.info("List orders")
         with self._database_engine.new_session() as session:
             orders = OrderDAO(session).getAll()
-            orders_data = [order.to_dict() for order in orders]
+            orders_data = [order.toDict() for order in orders]
         return orders_data
 
     # Get a specific order by its id
@@ -26,11 +26,10 @@ class OrderController:
         logging.info("Get order %s" % order_id)
         with self._database_engine.new_session() as session:
             order = OrderDAO(session).get(order_id)
-            order_data = order.to_dict()
+            order_data = order.toDict()
         return order_data
 
-    # Create an order with the data that should contain; the address for the shipment,
-    # the restaurant id, the client id, the shipment address and a list of products
+    # Create an order with the data that should be a basket
     def createOrder(self, data):
         logging.info("Create order with data %s" % str(data))
         try:
@@ -38,7 +37,7 @@ class OrderController:
                 # Save order in database
                 dao = OrderDAO(session)
                 order = dao.create(data)
-                order_data = order.to_dict()
+                order_data = order.toDict()
                 return order_data
         except Error as e:
             # log error
@@ -51,16 +50,18 @@ class OrderController:
         # Query database
         with self._database_engine.new_session() as session:
             dao = OrderDAO(session)
-            order = dao.getByClient(client)
-            return order.to_dict()
+            orders = dao.getByClient(client)
+            orders_data = [order.toDict() for order in orders]
+            return orders_data
 
     def searchOrdersByRestaurant(self, restaurant):
         logging.info("Search orders of %s" % restaurant)
         # Query database
         with self._database_engine.new_session() as session:
             dao = OrderDAO(session)
-            order = dao.getByRestaurant(restaurant)
-            return order.to_dict()
+            orders = dao.getByRestaurant(restaurant)
+            orders_data = [order.toDict() for order in orders]
+            return orders_data
 
 ####################################################################################################################################################
 #####                                                           Illogics functions                                                             #####
@@ -75,7 +76,7 @@ class OrderController:
             dao = OrderDAO(session)
             order = dao.get(order_id)
             order = dao.update(order, order_data)
-            return order.to_dict()
+            return order.toDict()
 
     # Delete a specific order by its id
     def deleteOrder(self, order_id):

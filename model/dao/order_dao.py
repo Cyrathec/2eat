@@ -34,7 +34,7 @@ class OrderDAO(DAO):
         order = Order(client=data.get('client'), restaurant=data.get('restaurant'), address=data.get('address'), price=0.0)
         for product in data['products']:
             order.products.append(product)
-            order.price += product.price
+            order.price += product['price']
         self._database_session.add(order)
         self._database_session.flush()
         return order
@@ -54,9 +54,9 @@ class OrderDAO(DAO):
         if 'products' in data:
             order.price = 0
             order.products.clear()
-            for product in products:
+            for product in data['products']:
                 order.products.append(product)
-                order.price += product.price
+                order.price += product['price']
                 
         self._database_session.merge(order)
         self._database_session.flush()
