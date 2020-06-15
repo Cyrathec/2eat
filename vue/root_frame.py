@@ -40,15 +40,9 @@ class RootFrame(Frame):
        #connexion
        self.hide_frames()
        connexion_frame = ConnexionFrame(self._person_controller, self)
+       self._frames.append(connexion_frame)
        connexion_frame.show()
 
-    def show_profile(self, member_id):
-        member_data = self._person_controller.get_person(member_id)
-
-        self.hide_frames()
-        profile_frame = ProfileFrame(self._person_controller, member_data, self)
-        self._frames.append(profile_frame)
-        profile_frame.show()
 
  
 

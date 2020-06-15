@@ -12,17 +12,12 @@ class NewMemberFrame(NewPersonFrame):
 
     def create_widgets(self):
         super().create_widgets()
-        self.medical_certificate = BooleanVar()
-        self.medical_certificate.set(False)
-
-        self.medical_certificate_ckeck = Checkbutton(self, text="Medical certificate",
-                                                     variable=self.medical_certificate)
-        self.medical_certificate_ckeck.grid(row=4)
+       
 
     def valid(self):
 
         data = super().get_data()
-        data['medical_certificate'] = bool(self.medical_certificate.get())
+       
 
         try:
             member_data = self._person_controller.create_member(data)

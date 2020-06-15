@@ -22,7 +22,7 @@ class NewPersonFrame(BaseFrame):
         self.lastname_entry = self.create_entry("Lastname", row=2, validate_callback=self.validate_name)
         self.email_entry = self.create_entry("Email", row=3, validate_callback=self.validate_email)
         
-        self.medical_certificate.set(False)
+        
 
         Label(self, text="Address:", font='bold').grid(row=10, sticky='w')
         self.street_entry = self.create_entry("Street", row=11)

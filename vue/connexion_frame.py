@@ -49,14 +49,17 @@ class ConnexionFrame(BaseFrame):
                                   command=self.connexion)
         self.cancel_button = Button(self, text="Erase", fg="Blue", command=self.refresh)
         self.menu_button = Button(self, text="Menu", fg="Red", command=self.show_menu)
+        self.inscription_button = Button(self, text="Inscription", fg="Blue", command=self.inscription)
         
+        self.inscription_button.grid(row=20, column=2)
         self.menu_button.grid(row=20, column=3)
         self.connexion_button.grid(row=20, column=0, sticky=E)
         self.cancel_button.grid(row=20, column=1, sticky=W)
 
      
 
-
+    def inscription(self):
+        self._root_frame.new_member()
      
     def refresh(self):
        
@@ -79,13 +82,7 @@ class ConnexionFrame(BaseFrame):
             entry.config(fg='black')
 
     def show_menu(self):
-        self.connexion_button.grid_forget()
-        self.cancel_button.grid_forget()
-        self.menu_button.grid_forget()
-        self.email_entry.grid_forget()
-        self.password_entry.grid_forget()
-        self.title.grid_forget()
-        super().back()
+        self._root_frame.show_menu()
 
 
 
