@@ -16,9 +16,7 @@ class PersonDAO(DAO):
     def get(self, id):
         return self._database_session.query(self._person_type).filter_by(id=id).one()
 
-    @dao_error_handler
-    def get_all(self):
-        return self._database_session.query(self._person_type).order_by(self._person_type.firstname).all()
+    
 
     @dao_error_handler
     def get_by_name(self, firstname: str, lastname: str):

@@ -2,8 +2,11 @@ import re
 import logging
 
 from model.dao.person_dao_fabric import PersonDAOFabric
+from sqlalchemy import *
+
 
 from exceptions import Error, InvalidData
+from model.mapping.person import Person
 
 
 class PersonController:
@@ -14,18 +17,12 @@ class PersonController:
     def __init__(self, database_engine):
         self._database_engine = database_engine
 
-    def list_people(self, person_type=None):
-        logging.info("Get people")
-        with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao(type=person_type)
-            members = dao.get_all()
-            members_data = [member.to_dict() for member in members]
-        return members_data
+   
 
     def get_person(self, person_id, person_type=None):
         logging.info("Get person %s" % person_id)
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao(type=person_type)
+            dao = PersonDAOFabric(session).get_dao()
             member = dao.get(person_id)
             member_data = member.to_dict()
         return member_data
@@ -39,7 +36,7 @@ class PersonController:
         try:
             with self._database_engine.new_session() as session:
                 # Save member in database
-                dao = PersonDAOFabric(session).get_dao(type=person_type)
+                dao = PersonDAOFabric(session).get_dao()
                 member = dao.create(data)
                 member_data = member.to_dict()
                 return member_data
@@ -51,11 +48,32 @@ class PersonController:
     def create_member(self, data):
         return self.create_person(data, 'member')
 
+    def connexion(self, email, password):
+        logging.info("Connexion with email %s" % str(email))
+        with self._database_engine.new_session() as session:
+            dao = PersonDAOFabric(session).get_dao()
+            
+            try:
+                person = session.query(Person).filter_by(email=email).one()
+                if password == person.password:
+                    logging.info("Connexion success %s %s" % (str(person.firstname), str(person.lastname)))
+                    return person
+                else:
+                    logging.info("Wrong id, try again")
+                    return {0}
+            except:
+                logging.info("Wrong id, try again")
+                return {0}
+          
+          
+                
+            
+                
 
     def _update_person(self, member_id, member_data, person_type=None):
         logging.info("Update %s with data: %s" % (member_id, str(member_data)))
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao(type=person_type)
+            dao = PersonDAOFabric(session).get_dao()
             person = dao.get(member_id)
 
             person = dao.update(person, member_data)
@@ -75,7 +93,7 @@ class PersonController:
     def delete_person(self, member_id, person_type=None):
         logging.info("Delete person %s" % member_id)
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao(type=person_type)
+            dao = PersonDAOFabric(session).get_dao()
             member = dao.get(member_id)
             dao.delete(member)
 
@@ -83,7 +101,7 @@ class PersonController:
         logging.info("Search person %s %s" % (firstname, lastname))
         # Query database
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao(type=person_type)
+            dao = PersonDAOFabric(session).get_dao()
             member = dao.get_by_name(firstname, lastname)
             return member.to_dict()
 

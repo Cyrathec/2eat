@@ -3,7 +3,8 @@ from tkinter import *
 from vue.menu_frame import MenuFrame
 from vue.member_frames.new_member_frame import NewMemberFrame
 from vue.member_frames.list_members_frame import ListMembersFrame
-from vue.member_frames.profile_frame import ProfileFrame
+
+from vue.connexion_frame import ConnexionFrame
 
 
 class RootFrame(Frame):
@@ -34,7 +35,12 @@ class RootFrame(Frame):
         self._frames.append(list_frame)
         list_frame.show()
         
-   
+    def connexion_frame(self):
+
+       #connexion
+       self.hide_frames()
+       connexion_frame = ConnexionFrame(self._person_controller, self)
+       connexion_frame.show()
 
     def show_profile(self, member_id):
         member_data = self._person_controller.get_person(member_id)

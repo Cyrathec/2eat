@@ -10,8 +10,7 @@ class DAO:
     def get(self, id):
         raise NotImplementedError()
 
-    def get_all(self):
-        raise NotImplementedError()
+    
 
     def create(self, data: dict):
         raise NotImplementedError()

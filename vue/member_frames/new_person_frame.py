@@ -21,7 +21,7 @@ class NewPersonFrame(BaseFrame):
         self.firstname_entry = self.create_entry("Firstname", row=1, validate_callback=self.validate_name)
         self.lastname_entry = self.create_entry("Lastname", row=2, validate_callback=self.validate_name)
         self.email_entry = self.create_entry("Email", row=3, validate_callback=self.validate_email)
-        self.medical_certificate = BooleanVar()
+        
         self.medical_certificate.set(False)
 
         Label(self, text="Address:", font='bold').grid(row=10, sticky='w')
@@ -29,7 +29,7 @@ class NewPersonFrame(BaseFrame):
         self.postal_code_entry = self.create_entry("Postal Code", row=12, validate_callback=self.validate_postal_code)
         self.city_entry = self.create_entry("City", row=13)
         self.country_entry = self.create_entry("Country", row=14)
-        self.password_entry = self.create_entry("Password", row=56)
+        self.password_entry = self.create_entry("Password", row=4)
 
         self.valid = Button(self, text="valid", fg="red",
                             command=self.valid)
