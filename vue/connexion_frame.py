@@ -48,11 +48,9 @@ class ConnexionFrame(BaseFrame):
         self.connexion_button = Button(self, text="Connexion", fg="Blue",
                                   command=self.connexion)
         self.cancel_button = Button(self, text="Erase", fg="Blue", command=self.refresh)
-        self.menu_button = Button(self, text="Menu", fg="Red", command=self.show_menu)
         self.inscription_button = Button(self, text="Inscription", fg="Blue", command=self.inscription)
         
         self.inscription_button.grid(row=20, column=2)
-        self.menu_button.grid(row=20, column=3)
         self.connexion_button.grid(row=20, column=0, sticky=E)
         self.cancel_button.grid(row=20, column=1, sticky=W)
 
@@ -92,11 +90,12 @@ class ConnexionFrame(BaseFrame):
             if member_data != {0}:
                 messagebox.showinfo("Connexion success !" )
                
-                self._root_frame.show_restaurants()
+                self._root_frame.show_menu(member_data)
             else:
                 messagebox.showinfo("Try again")
                 self.refresh()
         except Error as e:
+            logging.info("Error Menu")
             messagebox.showerror("Error", str(e))
             return
 

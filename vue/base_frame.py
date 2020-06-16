@@ -32,5 +32,5 @@ class BaseFrame(Frame):
         entry.grid(row=row, column=1, columnspan=columnspan)
         return entry
 
-    def show_menu(self):
-        self._root_frame.show_menu()
+    def show_menu(self,member=None):
+        self._root_frame.show_menu(member)

@@ -31,7 +31,7 @@ class NewPersonFrame(BaseFrame):
         self.country_entry = self.create_entry("Country", row=14)
        
 
-        self.valid = Button(self, text="valid", fg="red",
+        self.valid = Button(self, text="valid", fg="green",
                             command=self.valid)
         self.cancel = Button(self, text="cancel", fg="red",
                              command=self.back)
@@ -79,14 +79,3 @@ class NewPersonFrame(BaseFrame):
 
     def valid(self):
         data = self.get_data()
-        try:
-            member_data = self._person_controller.create_person(data)
-            messagebox.showinfo("Success",
-                                "Member %s %s created !" % (member_data['firstname'], member_data['lastname']))
-         
-
-        except Error as e:
-            messagebox.showerror("Error", str(e))
-            return
-
-        self.back()

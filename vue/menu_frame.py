@@ -14,13 +14,11 @@ class MenuFrame(BaseFrame):
         self.restaurants = Button(self, text="Restaurants", width=30, command=self._root_frame.show_restaurants)
         if self._is_admin == True :
             self.products = Button(self, text="Products", width=30, command=self._root_frame.show_products)
-        self.members = Button(self, text="Members", width=30, command=self._root_frame.show_members)
         
         
         self.quit = Button(self, text="QUIT", fg="red", width=30,
                            command=self.quit)
         self.title.pack(side="top")
-        self.members.pack()
         self.restaurants.pack()
         if self._is_admin == True :
             self.products.pack()

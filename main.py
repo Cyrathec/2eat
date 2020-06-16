@@ -31,9 +31,9 @@ def main():
 	product_controller = ProductController(database_engine)
 	person_controller = PersonController(database_engine)
 	# init vue
-	root = RootFrame(restaurant_controller, product_controller,person_controller)#TODO modifier le rootFrame associé
+	root = RootFrame(restaurant_controller, product_controller,person_controller)
 	root.master.title("2eat subscription app")
-	root.show_menu()
+	root.show_members()
     
 
 	# start

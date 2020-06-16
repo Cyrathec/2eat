@@ -35,30 +35,10 @@ class ListRestaurantsFrame(BaseFrame):
                            command=self.show_menu)
         if self._is_admin == True :
             self.new_restaurant_button.grid(row=3, sticky="nsew")
+        self.hide()
         self.menu.grid(row=4, column=0, sticky="w")
 
-        #TODO copier dans un autre fichier
-        """
-        self.title = Label(self, text="List %s:" % self._person_type.capitalize())
-       
-        self.connexion_button = Button(self, text="Connexion", command=self.connexion)
-        self.menu = Button(self, text="Return", fg="red",
-                           command=self.show_menu)
-        self.inscription_button = Button(self, text="Inscription", command=self.inscription)
-
-        self.inscription_button.grid(row=5, sticky="W")
-        self.connexion_button.grid(row = 4, sticky="w")
-        self.menu.grid(row=6, column=0, sticky="w")
         
-
-
-
-
-    
-    
-    def connexion(self):
-        self._root_frame.connexion_frame()
-    """
     def new_restaurant(self):
         self._root_frame.new_restaurant()
 
@@ -83,16 +63,4 @@ class ListRestaurantsFrame(BaseFrame):
             self.show_profile_button.grid_forget()
         else:
             self.show_profile_button.grid(row=3, column=1, sticky="nsew")
-    """TODO copier dans un autre fichier
-    def new_person(self):
-        if self._person_type == 'member':
-            self._root_frame.new_member()
- 
-    def inscription(self):
-        self._root_frame.new_member()
-    
-
-    def show(self):
-        
-    """
             

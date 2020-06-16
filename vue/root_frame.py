@@ -25,9 +25,8 @@ class RootFrame(Frame):
         super().__init__(master)
         self._restaurant_controller = restaurant_controller
         self._product_controller = product_controller
-        self._menu_frame = MenuFrame(self)
         self._person_controller = person_controller
-        self._menu_frame = MenuFrame(self)
+        self._menu_frame = []
         self._frames = []
 
 
@@ -54,8 +53,7 @@ class RootFrame(Frame):
 
     def show_restaurants(self):
         # show restaurants
-        for frame in self._frames:
-            frame.hide()
+        self.hide_menu()
         list_frame = ListRestaurantsFrame(self._restaurant_controller, self)
         self._frames.append(list_frame)
         list_frame.show()
@@ -81,7 +79,7 @@ class RootFrame(Frame):
         list_frame.show()
 
     def show_product(self, product_id):
-        product_data = self._product_controller.get_product(product_id)
+        product_data = self._product_controller.get_product(product_id)#TODO envoyer le produit a launch.py je supposes
 
         self.hide_frames()
         profile_frame = ProductProfileFrame(self._product_controller, product_data, self)
@@ -89,7 +87,7 @@ class RootFrame(Frame):
         profile_frame.show()
         
     def show_members(self):
-        self.hide_menu()
+        #self.hide_menu()
         list_frame = ListMembersFrame(self._person_controller, self, person_type='member')
         self._frames.append(list_frame)
         list_frame.show()
@@ -114,6 +112,7 @@ class RootFrame(Frame):
     def show_menu(self,member=None):
         for frame in self._frames:
             frame.destroy()
+        self._menu_frame = MenuFrame(self,member)
         self._frames = []
         self._menu_frame.show()
 
