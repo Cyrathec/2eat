@@ -23,6 +23,7 @@ class NewMemberFrame(NewPersonFrame):
             member_data = self._person_controller.create_person(data)
             messagebox.showinfo("Success",
                                 "Member %s %s created !" % (member_data['firstname'], member_data['lastname']))
+            
 
         except Error as e:
             messagebox.showerror("Error", str(e))

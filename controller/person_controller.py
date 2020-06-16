@@ -37,6 +37,14 @@ class PersonController:
             with self._database_engine.new_session() as session:
                 # Save member in database
                 dao = PersonDAOFabric(session).get_dao()
+               
+                person = session.query(Person).filter_by(email=data.get('email')).one()
+                if person.email == data.get('email'):
+
+                     
+                     raise InvalidData("Mail already existing")
+                
+
                 member = dao.create(data)
                 member_data = member.to_dict()
                 return member_data
