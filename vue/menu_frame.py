@@ -3,7 +3,7 @@ from vue.base_frame import BaseFrame
 
 
 class MenuFrame(BaseFrame):
-    def __init__(self, root_frame, isAdmin=None):
+    def __init__(self, root_frame, isAdmin=False):
         super().__init__(root_frame)
         self._is_admin = isAdmin
         self.create_widgets()
@@ -18,5 +18,6 @@ class MenuFrame(BaseFrame):
         self.title.pack(side="top")
         
         self.restaurants.pack()
-        self.products.pack()
+        if self._is_admin == True :
+            self.products.pack()
         self.quit.pack(side="bottom")
