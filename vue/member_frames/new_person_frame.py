@@ -61,15 +61,18 @@ class NewPersonFrame(BaseFrame):
     def get_data(self):
         data = dict(firstname=self.firstname_entry.get(),
                     lastname=self.lastname_entry.get(),
-                    email=self.email_entry.get(), password=str(hash(self.password_entry.get())))
+                    email=self.email_entry.get(), password=str(hash(self.password_entry.get())), address='')
 
-        if self.street_entry.get() != "" and self.city_entry.get() != "" and \
-                re.match("[\d]+", self.postal_code_entry.get()):
-            address = dict(street=self.street_entry.get(),
-                           postal_code=int(self.postal_code_entry.get()),
-                           city=self.city_entry.get())
+        if self.street_entry.get() != "" and self.city_entry.get() != "":
+            address = ""
+            address += self.street_entry.get()
+            address += " "
+            address += self.city_entry.get()
+            address += " "
+            address += self.postal_code_entry.get()
+            address += " "
             if self.country_entry.get() != "":
-                address['country'] = self.country_entry.get()
+                address += self.country_entry.get()
             data['address'] = address
         return data
 

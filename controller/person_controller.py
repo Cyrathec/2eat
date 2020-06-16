@@ -126,14 +126,7 @@ class PersonController:
         }
         self._check_data(data, specs, update=update)
 
-        if 'address' in data:
-            address = data['address']
-            specs = {
-                'street': {"type": str},
-                'postal_code': {"type": int},
-                'city': {"type": str}
-            }
-            self._check_data(address, specs, update=update)
+        
 
     def _check_data(self, data, specs, update=False):
         for mandatory, specs in specs.items():

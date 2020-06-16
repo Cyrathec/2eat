@@ -15,11 +15,10 @@ class Person(Base):
     firstname = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
     email = Column(String(256), nullable=False)
-    person_type = Column(String(50), nullable=False)
-    address_id = Column(String(36), ForeignKey("addresses.id"), nullable=True)
+    person_type = Column(String(50), nullable=True)
     password = Column(String(256), nullable=False)
 
-    address = relationship("Address", cascade="all,delete-orphan", single_parent=True)
+    address_id = Column(String(256), nullable=True)
 
     __table_args__ = (UniqueConstraint('firstname', 'lastname'),)
     # https://docs.sqlalchemy.org/en/13/orm/inheritance.html
@@ -41,13 +40,9 @@ class Person(Base):
         }
         
 
-        if self.address is not None:
-            _data['address'] = {
-                "street": self.address.street,
-                "postal_code": self.address.postal_code,
-                "city": self.address.city,
-                "country": self.address.country
-            }
+        if self.address_id is not None:
+            _data['address'] = self.address_id
+            
         return _data
 
     def set_address(self, street: str, postal_code: str, city: int, country: str = 'FRANCE'):

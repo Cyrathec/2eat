@@ -17,10 +17,10 @@ class NewMemberFrame(NewPersonFrame):
     def valid(self):
 
         data = super().get_data()
-        data['medical_certificate'] = bool(True)
+        
 
         try:
-            member_data = self._person_controller.create_member(data)
+            member_data = self._person_controller.create_person(data)
             messagebox.showinfo("Success",
                                 "Member %s %s created !" % (member_data['firstname'], member_data['lastname']))
 

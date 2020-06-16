@@ -10,7 +10,14 @@ class PersonDAO(DAO):
 
     def __init__(self, database_session, person_type=Person):
         super().__init__(database_session)
+    
         
+    def create(self, data: dict):
+        person = Person(firstname=data.get('firstname'), lastname=data.get('lastname'), email=data.get('email'), 
+                        password=data.get('password'), address_id=data.get('address'))
+        self._database_session.add(person)
+        self._database_session.flush()
+        return person
 
     @dao_error_handler
     def get(self, id):
