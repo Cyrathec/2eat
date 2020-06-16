@@ -9,6 +9,10 @@ from vue.restaurant_frames.profile_frame import ProfileFrame
 from vue.product_frames.list_products_frame import ListProductsFrame
 from vue.product_frames.new_product_frame import NewProductFrame
 from vue.product_frames.product_profile_frame import ProductProfileFrame
+from vue.member_frames.new_member_frame import NewMemberFrame
+from vue.member_frames.list_members_frame import ListMembersFrame
+
+from vue.connexion_frame import ConnexionFrame
 
 
 class RootFrame(Frame):
@@ -22,7 +26,10 @@ class RootFrame(Frame):
         self._restaurant_controller = restaurant_controller
         self._product_controller = product_controller
         self._menu_frame = MenuFrame(self)
+        self._person_controller = person_controller
+        self._menu_frame = MenuFrame(self)
         self._frames = []
+
 
     def new_restaurant(self):
         self.hide_frames()
@@ -36,6 +43,14 @@ class RootFrame(Frame):
         new_product_frame = NewProductFrame(self._product_controller, self)
         new_product_frame.show()
         self._frames.append(new_product_frame)
+
+    def new_member(self):
+        self.hide_frames()
+        # Show formular subscribe
+        subscribe_frame = NewMemberFrame(self._person_controller, self)
+        subscribe_frame.show()
+        self._frames.append(subscribe_frame)
+
 
     def show_restaurants(self):
         # show restaurants
@@ -71,6 +86,19 @@ class RootFrame(Frame):
         profile_frame = ProductProfileFrame(self._product_controller, product_data, self)
         self._frames.append(profile_frame)
         profile_frame.show()
+        
+    def connexion_frame(self):
+
+       #connexion
+       self.hide_frames()
+       connexion_frame = ConnexionFrame(self._person_controller, self)
+       self._frames.append(connexion_frame)
+       connexion_frame.show()
+
+
+ 
+
+  
 
     def hide_frames(self):
         for frame in self._frames:
