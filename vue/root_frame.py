@@ -54,7 +54,8 @@ class RootFrame(Frame):
 
     def show_restaurants(self):
         # show restaurants
-        self.hide_menu()
+        for frame in self._frames:
+            frame.hide()
         list_frame = ListRestaurantsFrame(self._restaurant_controller, self)
         self._frames.append(list_frame)
         list_frame.show()
@@ -110,7 +111,7 @@ class RootFrame(Frame):
         for frame in self._frames:
             frame.hide()
 
-    def show_menu(self):
+    def show_menu(self,member=None):
         for frame in self._frames:
             frame.destroy()
         self._frames = []

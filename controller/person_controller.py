@@ -60,7 +60,7 @@ class PersonController:
         logging.info("Connexion with email %s" % str(email))
         with self._database_engine.new_session() as session:
             dao = PersonDAOFabric(session).get_dao()
-            pwd = str(hash(password))
+            pwd = password #str(hash(password))
             
             try:
                 person = session.query(Person).filter_by(email=email).one()

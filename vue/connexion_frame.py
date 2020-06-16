@@ -81,8 +81,8 @@ class ConnexionFrame(BaseFrame):
         else:
             entry.config(fg='black')
 
-    def show_menu(self):
-        self._root_frame.show_menu()
+    def show_menu(self,member_data=None):
+        self._root_frame.show_menu(member_data)
 
 
 
@@ -91,7 +91,8 @@ class ConnexionFrame(BaseFrame):
             member_data = self._person_controller.connexion(self.email_entry.get(), self.password_entry.get())
             if member_data != {0}:
                 messagebox.showinfo("Connexion success !" )
-                self.show_menu()
+               
+                self._root_frame.show_restaurants()
             else:
                 messagebox.showinfo("Try again")
                 self.refresh()

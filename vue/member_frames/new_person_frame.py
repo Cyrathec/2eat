@@ -59,9 +59,10 @@ class NewPersonFrame(BaseFrame):
             entry.config(fg='black')
 
     def get_data(self):
+        #str(hash(self.password_entry.get()))
         data = dict(firstname=self.firstname_entry.get(),
                     lastname=self.lastname_entry.get(),
-                    email=self.email_entry.get(), password=str(hash(self.password_entry.get())), address='')
+                    email=self.email_entry.get(), password = self.password_entry.get(), address='')
 
         if self.street_entry.get() != "" and self.city_entry.get() != "":
             address = ""
