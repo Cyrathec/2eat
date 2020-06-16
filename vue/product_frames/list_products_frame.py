@@ -7,7 +7,7 @@ from controller.product_controller import ProductController
 
 class ListProductsFrame(BaseFrame):
 	
-	def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None,isAdmin=False):
+	def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None,isAdmin=None):
 		super().__init__(root_frame)
 		self._product_controller = product_controller
 		self._is_admin = isAdmin

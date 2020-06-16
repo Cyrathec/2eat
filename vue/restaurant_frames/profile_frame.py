@@ -115,15 +115,15 @@ class ProfileFrame(BaseFrame):
 				return product['id']
 		return None
 
-	# def add_product(self):
-	#     product_name = self.choose_product_box.get()
-	#     if product_name != "":
-	#         product_id = self.get_product_id(product_name)
-	#         if product_id is not None:
-	#             self._restaurant = self._restaurant_controller.add_product_restaurant(self._restaurant['id'], product_id)
-	#         else:
-	#             messagebox.showerror("Product %s not found" % product_name)
-	#     self.refresh_products()
+	def add_product(self):
+	    product_name = self.choose_product_box.get()
+	    if product_name != "":
+	        product_id = self.get_product_id(product_name)
+	        if product_id is not None:
+	            self._restaurant = self._restaurant_controller.add_product_restaurant(self._restaurant['id'], product_id)
+	        else:
+	            messagebox.showerror("Product %s not found" % product_name)
+	    self.refresh_products()
 
 	def delete_product(self, product_id):
 		self._restaurant = self._restaurant_controller.delete_product_restaurant(self._restaurant['id'], product_id)

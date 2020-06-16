@@ -7,7 +7,7 @@ from controller.restaurant_controller import RestaurantController
 
 class ListRestaurantsFrame(BaseFrame):
 
-    def __init__(self, restaurant_controller: RestaurantController, root_frame: Frame,isAdmin=False):
+    def __init__(self, restaurant_controller: RestaurantController, root_frame: Frame,isAdmin=None):
         super().__init__(root_frame)
         self._restaurant_controller = restaurant_controller
         self._is_admin = isAdmin
