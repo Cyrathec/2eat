@@ -16,7 +16,6 @@ class ListRestaurantsFrame(BaseFrame):
 
     def _create_widgets(self):
 
-<<<<<<< HEAD:vue/restaurant_frames/list_restaurant_frame.py
         self.title = Label(self, text="List restaurants:")
         self.title.grid(row=0, column=0)
 
@@ -37,7 +36,9 @@ class ListRestaurantsFrame(BaseFrame):
         if self._is_admin == True :
             self.new_restaurant_button.grid(row=3, sticky="nsew")
         self.menu.grid(row=4, column=0, sticky="w")
-=======
+
+        #TODO copier dans un autre fichier
+        """
         self.title = Label(self, text="List %s:" % self._person_type.capitalize())
        
         self.connexion_button = Button(self, text="Connexion", command=self.connexion)
@@ -48,8 +49,8 @@ class ListRestaurantsFrame(BaseFrame):
         self.inscription_button.grid(row=5, sticky="W")
         self.connexion_button.grid(row = 4, sticky="w")
         self.menu.grid(row=6, column=0, sticky="w")
+        
 
->>>>>>> origin/auth:vue/member_frames/list_members_frame.py
 
 
 
@@ -57,8 +58,7 @@ class ListRestaurantsFrame(BaseFrame):
     
     def connexion(self):
         self._root_frame.connexion_frame()
-
-<<<<<<< HEAD:vue/restaurant_frames/list_restaurant_frame.py
+    """
     def new_restaurant(self):
         self._root_frame.new_restaurant()
 
@@ -76,7 +76,14 @@ class ListRestaurantsFrame(BaseFrame):
         for index, restaurant in enumerate(self._restaurants):
             text = restaurant['name'] + ', ' + restaurant['address']
             self.listbox.insert(index, text)
-=======
+        super().show()
+
+    def on_select(self, event):
+        if len(self.listbox.curselection()) == 0:
+            self.show_profile_button.grid_forget()
+        else:
+            self.show_profile_button.grid(row=3, column=1, sticky="nsew")
+    """TODO copier dans un autre fichier
     def new_person(self):
         if self._person_type == 'member':
             self._root_frame.new_member()
@@ -87,7 +94,5 @@ class ListRestaurantsFrame(BaseFrame):
 
     def show(self):
         
-        
+    """
             
->>>>>>> origin/auth:vue/member_frames/list_members_frame.py
-        super().show()

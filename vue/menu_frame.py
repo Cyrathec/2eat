@@ -23,6 +23,6 @@ class MenuFrame(BaseFrame):
         self.restaurants.pack()
         if self._is_admin == True :
             self.products.pack()
-        #TODO
+        
 
         self.quit.pack(side="bottom")

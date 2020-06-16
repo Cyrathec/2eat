@@ -10,8 +10,14 @@ class PersonDAO(DAO):
 
     def __init__(self, database_session, person_type=Person):
         super().__init__(database_session)
-        self._person_type = person_type
+        #self._person_type = person_type
 
+    def create(self, data: dict):
+        person = Person(firstname=data.get('firstname'), lastname=data.get('lastname'), email=data.get('email'), 
+                        password=data.get('password'), address_id=data.get('address'))
+        self._database_session.add(person)
+        self._database_session.flush()
+        return person
     @dao_error_handler
     def get(self, id):
         return self._database_session.query(self._person_type).filter_by(id=id).one()
@@ -23,20 +29,6 @@ class PersonDAO(DAO):
         return self._database_session.query(self._person_type)\
             .filter_by(firstname=firstname, lastname=lastname).one()
 
-    @dao_error_handler
-    def _update_address(self, member, address_data):
-        if member.address is not None:
-            if 'street' in address_data:
-                member.address.street = address_data['street']
-            if 'postal_code' in address_data:
-                member.address.postal_code = address_data['postal_code']
-            if 'city' in address_data:
-                member.address.city = address_data['city']
-            if 'country' in address_data:
-                member.address.country = address_data['country']
-        else:
-            member.set_address(address_data['street'], address_data['postal_code'], address_data['city'],
-                               address_data.get('country', 'FRANCE'))
 
     @dao_error_handler
     def update(self, member: Person, data: dict):

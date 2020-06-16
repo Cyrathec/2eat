@@ -21,7 +21,7 @@ class RootFrame(Frame):
     help: http://www.xavierdupre.fr/app/teachpyx/helpsphinx/c_gui/tkinter.html
     """
 
-    def __init__(self, restaurant_controller, product_controller, master=None):
+    def __init__(self, restaurant_controller, product_controller,person_controller ,master=None):
         super().__init__(master)
         self._restaurant_controller = restaurant_controller
         self._product_controller = product_controller
@@ -87,6 +87,12 @@ class RootFrame(Frame):
         self._frames.append(profile_frame)
         profile_frame.show()
         
+    def show_members(self):
+        self.hide_menu()
+        list_frame = ListMembersFrame(self._person_controller, self, person_type='member')
+        self._frames.append(list_frame)
+        list_frame.show()
+
     def connexion_frame(self):
 
        #connexion

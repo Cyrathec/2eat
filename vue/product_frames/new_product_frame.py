@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter import messagebox
 
 from vue.product_frames.product_formular_frame import ProductFormularFrame
 from exceptions import Error
