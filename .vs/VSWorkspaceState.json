@@ -1,9 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\controller",
     "\\model",
-    "\\model\\dao"
+    "\\model\\dao",
+    "\\model\\mapping",
+    "\\vue",
+    "\\vue\\member_frames"
   ],
-  "SelectedNode": "\\model\\dao\\member_dao.py",
+  "SelectedNode": "\\main.py",
   "PreviewInSolutionExplorer": false
 }

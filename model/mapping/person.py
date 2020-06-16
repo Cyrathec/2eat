@@ -17,7 +17,7 @@ class Person(Base):
     email = Column(String(256), nullable=False)
     person_type = Column(String(50), nullable=False)
     address_id = Column(String(36), ForeignKey("addresses.id"), nullable=True)
-    password = Column(String(255), nullable=False)
+    password = Column(String(256), nullable=False)
 
     address = relationship("Address", cascade="all,delete-orphan", single_parent=True)
 

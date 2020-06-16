@@ -52,10 +52,11 @@ class PersonController:
         logging.info("Connexion with email %s" % str(email))
         with self._database_engine.new_session() as session:
             dao = PersonDAOFabric(session).get_dao()
+            pwd = str(hash(password))
             
             try:
                 person = session.query(Person).filter_by(email=email).one()
-                if password == person.password:
+                if pwd == person.password:
                     logging.info("Connexion success %s %s" % (str(person.firstname), str(person.lastname)))
                     return person
                 else:
@@ -108,7 +109,7 @@ class PersonController:
     def _check_member_data(self, data, update=False):
         self._check_person_data(data, update=update)
         specs = {
-            'medical_certificate': {"type": bool},
+            
         }
         self._check_data(data, specs, update=update)
 

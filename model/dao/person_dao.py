@@ -10,7 +10,7 @@ class PersonDAO(DAO):
 
     def __init__(self, database_session, person_type=Person):
         super().__init__(database_session)
-        self._person_type = person_type
+        
 
     @dao_error_handler
     def get(self, id):

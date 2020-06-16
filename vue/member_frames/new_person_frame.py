@@ -13,7 +13,7 @@ class NewPersonFrame(BaseFrame):
         self.create_widgets()
         self.name_pattern = re.compile("^[a-zA-Z-]{2,50}$")
         self.email_pattern = re.compile("^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$")
-        self.password_pattern = re.compile("^[a-zA-Z-]{2,50}$")
+        
 
     def create_widgets(self):
 
@@ -21,7 +21,7 @@ class NewPersonFrame(BaseFrame):
         self.firstname_entry = self.create_entry("Firstname", row=1, validate_callback=self.validate_name)
         self.lastname_entry = self.create_entry("Lastname", row=2, validate_callback=self.validate_name)
         self.email_entry = self.create_entry("Email", row=3, validate_callback=self.validate_email)
-        
+        self.password_entry = self.create_entry("Password", row=4)
         
 
         Label(self, text="Address:", font='bold').grid(row=10, sticky='w')
@@ -29,7 +29,7 @@ class NewPersonFrame(BaseFrame):
         self.postal_code_entry = self.create_entry("Postal Code", row=12, validate_callback=self.validate_postal_code)
         self.city_entry = self.create_entry("City", row=13)
         self.country_entry = self.create_entry("Country", row=14)
-        self.password_entry = self.create_entry("Password", row=4)
+       
 
         self.valid = Button(self, text="valid", fg="red",
                             command=self.valid)
@@ -44,11 +44,7 @@ class NewPersonFrame(BaseFrame):
         else:
             entry.config(fg='black')
 
-    def validate_password(self, event, entry=None):
-        if not self.password_pattern.match(entry.get()):
-            entry.config(fg='red')
-        else:
-            entry.config(fg='black')
+   
 
     def validate_postal_code(self, event, entry=None):
         if not re.match("[\d]+", entry.get()):
@@ -65,7 +61,7 @@ class NewPersonFrame(BaseFrame):
     def get_data(self):
         data = dict(firstname=self.firstname_entry.get(),
                     lastname=self.lastname_entry.get(),
-                    email=self.email_entry.get(), password=self.password_entry.get())
+                    email=self.email_entry.get(), password=str(hash(self.password_entry.get())))
 
         if self.street_entry.get() != "" and self.city_entry.get() != "" and \
                 re.match("[\d]+", self.postal_code_entry.get()):
