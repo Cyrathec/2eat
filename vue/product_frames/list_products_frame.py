@@ -7,10 +7,10 @@ from controller.product_controller import ProductController
 
 class ListProductsFrame(BaseFrame):
 	
-	def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None):
+	def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None,isAdmin=False):
 		super().__init__(root_frame)
 		self._product_controller = product_controller
-
+		self._is_admin = isAdmin
 		self._products = None
 		self._restaurant = restaurant
 		self._create_widgets()
@@ -29,11 +29,13 @@ class ListProductsFrame(BaseFrame):
 		self.listbox.grid(row=1, column=0, columnspan=2, sticky='nsew')
 
 		# Return bouton
-		self.new_product_button = Button(self, text="New Product", command=self._root_frame.new_product)
+		if self._is_admin == True :
+			self.new_product_button = Button(self, text="New Product", command=self._root_frame.new_product)
 		self.show_product_button = Button(self, text="Show profile", command=self.show_product)
 		self.menu = Button(self, text="Return", fg="red",
 						   command=self.show_menu)
-		self.new_product_button.grid(row=3, sticky="nsew")
+		if self._is_admin == True :
+			self.new_product_button.grid(row=3, sticky="nsew")
 		self.menu.grid(row=4, column=0, sticky="w")
 
 	def on_select(self, event):
