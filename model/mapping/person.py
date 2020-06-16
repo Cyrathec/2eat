@@ -7,19 +7,20 @@ from exceptions import ResourceNotFound
 
 
 class Person(Base):
-    __tablename__ = 'people'
+    __tablename__ = 'List_people'
 
     id = Column(String(36), default=str(uuid.uuid4()), primary_key=True)
 
     firstname = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
     email = Column(String(256), nullable=False)
-    person_type = Column(String(50), nullable=False)
-    password = Column(String(255), nullable=False)
+    person_type = Column(String(50), nullable=True)
+    password = Column(String(256), nullable=False)
 
-    address = Column(String(255), nullable=False)
+    address_id = Column(String(256), nullable=True)
 
-    __table_args__ = (UniqueConstraint('firstname', 'lastname'),)
+    __table_args__ = (UniqueConstraint('firstname', 'lastname', 'id'),)
+
     # https://docs.sqlalchemy.org/en/13/orm/inheritance.html
     __mapper_args__ = {
         'polymorphic_identity': 'person',
@@ -36,6 +37,17 @@ class Person(Base):
             "lastname": self.lastname,
             "email": self.email,
             "type": self.person_type,
-            "address":self.address
+            "address":self.address_id
         }
+        
+
+        if self.address_id is not None:
+            _data['address'] = self.address_id
+            
         return _data
+
+    def set_address(self, street: str, postal_code: str, city: int, country: str = 'FRANCE'):
+        self.address = Address(street=street, city=city, postal_code=postal_code, country=country)
+
+
+    
