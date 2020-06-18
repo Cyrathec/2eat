@@ -30,12 +30,12 @@ def main():
 	restaurant_controller = RestaurantController(database_engine)
 	product_controller = ProductController(database_engine)
 	person_controller = PersonController(database_engine)
+
 	# init vue
 	root = RootFrame(restaurant_controller, product_controller,person_controller)
 	root.master.title("2eat subscription app")
-	root.show_members()
+	root.show_auth_portal()
     
-
 	# start
 	root.mainloop()
 

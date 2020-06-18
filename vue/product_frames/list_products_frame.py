@@ -7,7 +7,7 @@ from controller.product_controller import ProductController
 
 class ListProductsFrame(BaseFrame):
 	
-	def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None,isAdmin=None):
+	def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None, isAdmin=None):
 		super().__init__(root_frame)
 		self._product_controller = product_controller
 		self._is_admin = isAdmin
@@ -31,7 +31,7 @@ class ListProductsFrame(BaseFrame):
 		# Return bouton
 		if self._is_admin == True :
 			self.new_product_button = Button(self, text="New Product", command=self._root_frame.new_product)
-		self.show_product_button = Button(self, text="Show profile", command=self.show_product)
+			self.show_product_button = Button(self, text="Show profile", command=self.show_product)
 		self.menu = Button(self, text="Return", fg="red",
 						   command=self.show_menu)
 		if self._is_admin == True :

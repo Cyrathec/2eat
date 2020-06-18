@@ -1,7 +1,7 @@
 import re
 import logging
 
-from model.dao.person_dao_fabric import PersonDAOFabric
+from model.dao.person_dao import PersonDAO
 from sqlalchemy import *
 
 
@@ -17,12 +17,17 @@ class PersonController:
     def __init__(self, database_engine):
         self._database_engine = database_engine
 
-   
+    def list_persons(self, isAdmin=None):
+        logging.info("List persons")
+        with self._database_engine.new_session() as session:
+            persons = PersonDAO(session).get_all()
+            persons_data = [person.to_dict() for person in persons]
+        return persons_data
 
     def get_person(self, person_id, person_type=None):
         logging.info("Get person %s" % person_id)
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao()
+            dao = PersonDAO(session)
             member = dao.get(person_id)
             member_data = member.to_dict()
         return member_data
@@ -36,7 +41,7 @@ class PersonController:
         try:
             with self._database_engine.new_session() as session:
                 # Save member in database
-                dao = PersonDAOFabric(session).get_dao()
+                dao = PersonDAO(session)
                
                 person = session.query(Person).filter_by(email=data.get('email')).all()
                 if person:
@@ -59,30 +64,25 @@ class PersonController:
     def connexion(self, email, password):
         logging.info("Connexion with email %s" % str(email))
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao()
+            dao = PersonDAO(session)
             pwd = password #str(hash(password))
             
             try:
                 person = session.query(Person).filter_by(email=email).one()
                 if pwd == person.password:
                     logging.info("Connexion success %s %s" % (str(person.firstname), str(person.lastname)))
-                    return person
+                    return person.to_dict()
                 else:
                     logging.info("Wrong id, try again")
                     return {0}
             except:
                 logging.info("Wrong id, try again")
                 return {0}
-          
-          
-                
-            
-                
 
     def _update_person(self, member_id, member_data, person_type=None):
         logging.info("Update %s with data: %s" % (member_id, str(member_data)))
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao()
+            dao = PersonDAO(session)
             person = dao.get(member_id)
 
             person = dao.update(person, member_data)
@@ -96,13 +96,10 @@ class PersonController:
         self._check_member_data(data, update=True)
         return self._update_person(member_id, data, person_type='member')
 
-
-   
-
     def delete_person(self, member_id, person_type=None):
         logging.info("Delete person %s" % member_id)
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao()
+            dao = PersonDAO(session)
             member = dao.get(member_id)
             dao.delete(member)
 
@@ -110,7 +107,7 @@ class PersonController:
         logging.info("Search person %s %s" % (firstname, lastname))
         # Query database
         with self._database_engine.new_session() as session:
-            dao = PersonDAOFabric(session).get_dao()
+            dao = PersonDAO(session)
             member = dao.get_by_name(firstname, lastname)
             return member.to_dict()
 
@@ -120,8 +117,6 @@ class PersonController:
             
         }
         self._check_data(data, specs, update=update)
-
- 
 
     def _check_person_data(self, data, update=False):
         name_pattern = re.compile("^[\S-]{2,50}$")
@@ -133,8 +128,6 @@ class PersonController:
             'password': {"type": str, "regex": name_pattern}
         }
         self._check_data(data, specs, update=update)
-
-        
 
     def _check_data(self, data, specs, update=False):
         for mandatory, specs in specs.items():

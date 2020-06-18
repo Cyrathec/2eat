@@ -4,8 +4,7 @@ from tkinter import *
 from vue.base_frame import BaseFrame
 from controller.person_controller import PersonController
 
-
-class ListMembersFrame(BaseFrame):
+class AuthPortal(BaseFrame):
 
     def __init__(self, person_controller: PersonController, root_frame: Frame, person_type: str = None):
         super().__init__(root_frame)
@@ -23,19 +22,13 @@ class ListMembersFrame(BaseFrame):
         self.title = Label(self, text="List %s:" % self._person_type.capitalize())
        
         self.connexion_button = Button(self, text="Connexion", command=self.connexion)
-        self.menu = Button(self, text="Return", fg="red",
-                           command=self.show_menu)
+        self.quit = Button(self, text="Quit", fg="red", command=self.quit)
         self.inscription_button = Button(self, text="Inscription", command=self.inscription)
 
         self.inscription_button.grid(row=5, sticky="W")
         self.connexion_button.grid(row = 4, sticky="w")
-        self.menu.grid(row=6, column=0, sticky="w")
+        self.quit.grid(row=6, column=0, sticky="w")
 
-
-
-
-    
-    
     def connexion(self):
         self._root_frame.connexion_frame()
 
@@ -46,9 +39,5 @@ class ListMembersFrame(BaseFrame):
     def inscription(self):
         self._root_frame.new_member()
     
-
-    def show(self):
-        
-        
-            
+    def show(self):   
         super().show()
