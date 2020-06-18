@@ -12,6 +12,8 @@ from vue.product_frames.product_profile_frame import ProductProfileFrame
 from vue.member_frames.new_member_frame import NewMemberFrame
 from vue.member_frames.list_members_frame import ListMembersFrame
 
+from vue.basket_frames.basket_frame import BasketFrame
+
 from vue.connexion_frame import ConnexionFrame
 
 
@@ -21,11 +23,12 @@ class RootFrame(Frame):
     help: http://www.xavierdupre.fr/app/teachpyx/helpsphinx/c_gui/tkinter.html
     """
 
-    def __init__(self, restaurant_controller, product_controller,person_controller ,master=None):
+    def __init__(self, restaurant_controller, product_controller, person_controller, basket_controller, master=None):
         super().__init__(master)
         self._restaurant_controller = restaurant_controller
         self._product_controller = product_controller
         self._person_controller = person_controller
+        self._basket_controller = basket_controller
         self._menu_frame = []
         self._frames = []
 
@@ -79,12 +82,26 @@ class RootFrame(Frame):
         list_frame.show()
 
     def show_product(self, product_id):
-        product_data = self._product_controller.get_product(product_id)#TODO envoyer le produit a launch.py je supposes
+        product_data = self._product_controller.get_product(product_id) #TODO envoyer le produit a launch.py je supposes
 
         self.hide_frames()
         profile_frame = ProductProfileFrame(self._product_controller, product_data, self)
         self._frames.append(profile_frame)
         profile_frame.show()
+
+    def show_basket(self):
+        self.hide_menu()
+        basket_frame = BasketFrame(self._basket_controller, self)
+        self._frames.append(basket_frame)
+        basket_frame.show()
+
+    def add_to_basket(self, product_id, restaurant_id):
+        product_data = self._product_controller.get_product(product_id)
+        if self._basket_controller.getBasket(0) != []:
+            self._basket_controller.addProduct(0, product_data)
+        else:
+            basket = self._basket_controller.createBasket("44fe59ab-f189-4827-90b8-43ad314fbb67", restaurant_id, "") # ici il faudra remplacer par (restaurant_id, client_id, address) l'address et le restaurant peuvent être changés
+            self._basket_controller.addProduct(basket['id'], product_data)
         
     def show_members(self):
         #self.hide_menu()

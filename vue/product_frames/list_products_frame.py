@@ -31,6 +31,7 @@ class ListProductsFrame(BaseFrame):
 		# Return bouton
 		if self._is_admin == True :
 			self.new_product_button = Button(self, text="New Product", command=self._root_frame.new_product)
+		self.add_to_basket_button = Button(self, text="Add to Basket", command=self.add_to_basket)
 		self.show_product_button = Button(self, text="Show profile", command=self.show_product)
 		self.menu = Button(self, text="Return", fg="red",
 						   command=self.show_menu)
@@ -40,8 +41,10 @@ class ListProductsFrame(BaseFrame):
 
 	def on_select(self, event):
 		if len(self.listbox.curselection()) == 0:
+			self.add_to_basket_button.grid_forget()
 			self.show_product_button.grid_forget()
 		else:
+			self.add_to_basket_button.grid(row=3, sticky="nsew")
 			self.show_product_button.grid(row=3, column=1, sticky="nsew")
 
 	def show_product(self):
@@ -51,6 +54,14 @@ class ListProductsFrame(BaseFrame):
 			index = int(self.listbox.curselection()[0])
 			product = self._products[index]
 			self._root_frame.show_product(product['id'])
+
+	def add_to_basket(self):
+		if len(self.listbox.curselection()) == 0:
+			self.show_product_button.grid_forget()
+		else:
+			index = int(self.listbox.curselection()[0])
+			product = self._products[index]
+			self._root_frame.add_to_basket(product['id'], self._restaurant['id'])
 
 	def show(self):
 		if self._restaurant is None:

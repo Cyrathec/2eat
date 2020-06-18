@@ -16,7 +16,10 @@ class BasketController:
         self.baskets = []
 
     def getBasket(self, id):
-        return self.baskets[id].toDict()
+        if id < len(self.baskets) :
+            return self.baskets[id].toDict()
+        else :
+            return []
 
     def listBaskets(self):
         baskets = [basket.toDict() for basket in self.baskets]
