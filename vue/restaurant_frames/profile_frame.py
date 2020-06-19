@@ -15,7 +15,6 @@ class ProfileFrame(BaseFrame):
 		self._product_controller = product_controller
 		self._products = []
 		self._create_widgets()
-		
 
 	def _create_widgets(self):
 

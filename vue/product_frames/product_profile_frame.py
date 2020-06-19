@@ -7,7 +7,8 @@ from exceptions import Error
 
 class ProductProfileFrame(ProductFormularFrame):
 
-	def __init__(self, product_controller, product, master=None):
+	def __init__(self, product_controller, product, master=None, isAdmin=False):
+		self._isAdmin = isAdmin
 		super().__init__(master)
 		self._product_controller = product_controller
 		self._product = product
@@ -17,17 +18,19 @@ class ProductProfileFrame(ProductFormularFrame):
 		super().create_widgets()
 
 		# Buttons
-		self.edit_button = Button(self, text="Edit",
-								  command=self.edit)
-		self.cancel_button = Button(self, text="Cancel", command=self.refresh)
-		self.update_button = Button(self, text="Update", command=self.update)
-		self.remove_button = Button(self, text="Remove", command=self.remove)
-		self.return_button = Button(self, text="Return", fg="red",
-									command=self.back)
+		if self._isAdmin == True:
+			self.edit_button = Button(self, text="Edit", command=self.edit)
+			self.cancel_button = Button(self, text="Cancel", command=self.refresh)
+			self.update_button = Button(self, text="Update", command=self.update)
+			self.remove_button = Button(self, text="Remove", command=self.remove)
 
+		self.return_button = Button(self, text="Return", fg="red", command=self.back)
+		
 		self.return_button.grid(row=20, column=0)
-		self.edit_button.grid(row=20, column=1, sticky="nsew")
-		self.remove_button.grid(row=20, column=2, sticky="nsew")
+
+		if self._isAdmin == True:
+			self.edit_button.grid(row=20, column=1, sticky="nsew")
+			self.remove_button.grid(row=20, column=2, sticky="nsew")
 
 	def edit(self):
 		self.edit_button.grid_forget()
