@@ -22,6 +22,7 @@ class MenuFrame(BaseFrame):
 			self.products = Button(self, text="Products", width=30, command=self._root_frame.show_products)
 			self.users = Button(self, text="Users", width=30, command=self._root_frame.show_persons)
 			self.restaurants = Button(self, text="Restaurants", width=30, command=self._root_frame.show_restaurants)
+			self.all_orders = Button(self, text="All orders", width=30, command=self._root_frame.list_orders)
 
 		
 		self.profile = Button(self, text="Profile", width=30, command=self.show_person_profile)
@@ -37,6 +38,7 @@ class MenuFrame(BaseFrame):
 			self.products.pack()
 			self.users.pack()
 			self.restaurants.pack()
+			self.all_orders.pack()
 			
 		self.profile.pack()
 

@@ -7,10 +7,11 @@ from functools import partial
 
 class ShowOrderFrame(BaseFrame):
 
-	def __init__(self, order_controller, order, master=None):
+	def __init__(self, order_controller, order, master=None, isAdmin=False):
 		super().__init__(master)
-		self._product_controller = order_controller
+		self._order_controller = order_controller
 		self._order = order
+		self._isAdmin = isAdmin
 		self._create_widgets()
 
 	def _create_widgets(self):
@@ -33,7 +34,12 @@ class ShowOrderFrame(BaseFrame):
 		# Return bouton
 		self.menu = Button(self, text="Return", fg="red",
 						   command=self.show_menu)
-		self.menu.grid(row=7, column=0, sticky="w")
+		self.menu.grid(row=5, column=0, sticky="w")
+		if self._isAdmin:
+			self.delete = Button(self, text="Delete the order", fg="red",
+							   command=self.delete)
+			self.delete.grid(row=5, column=1, sticky="w")
+
 
 	def show(self):
 		self.listbox.delete(0, END)
@@ -50,3 +56,7 @@ class ShowOrderFrame(BaseFrame):
 			self.address_entry.insert(0, str(self._order['address']))
 			self.address_entry.config(state=DISABLED)
 		super().show()
+
+	def delete(self):
+		self._order_controller.deleteOrder(self._order['id'])
+		self.show_menu()
