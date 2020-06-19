@@ -19,10 +19,10 @@ class MenuFrame(BaseFrame):
 		"""
 
 		if self._as_admin == True:
-			self.restaurants = Button(self, text="Restaurants", width=30, command=self._root_frame.show_restaurants)
 			self.products = Button(self, text="Products", width=30, command=self._root_frame.show_products)
 			self.users = Button(self, text="Users", width=30, command=self._root_frame.show_persons)
-		
+
+		self.restaurants = Button(self, text="Restaurants", width=30, command=self._root_frame.show_restaurants)
 		self.profile = Button(self, text="Profile", width=30, command=self.show_person_profile)
 
 		self.quit = Button(self, text="QUIT", fg="red", width=30, command=self.quit)
@@ -30,10 +30,10 @@ class MenuFrame(BaseFrame):
 		self.title.pack(side="top")
 
 		if self._as_admin == True:
-			self.restaurants.pack()
 			self.products.pack()
 			self.users.pack()
-		
+			
+		self.restaurants.pack()
 		self.profile.pack()
 
 		self.quit.pack(side="bottom")
