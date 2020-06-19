@@ -70,9 +70,9 @@ class ConnexionFrame(BaseFrame):
     def connexion(self):
         try:
             member_data = self._person_controller.connexion(self.email_entry.get(), self.password_entry.get())
+            print(member_data)
             if member_data != {0}:
                 messagebox.showinfo("Connexion success !" )
-               
                 self._root_frame.show_menu(member_data)
             else:
                 messagebox.showinfo("Try again")

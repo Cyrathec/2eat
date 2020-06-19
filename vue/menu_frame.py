@@ -25,6 +25,9 @@ class MenuFrame(BaseFrame):
 		self.restaurants = Button(self, text="Restaurants", width=30, command=self._root_frame.show_restaurants)
 		self.profile = Button(self, text="Profile", width=30, command=self.show_person_profile)
 
+        self.orders = Button(self, text="Orders", width=30, command=self._root_frame.show_restaurants) # rien n'a été fait à part le bouton, il affiche les restaurants
+        self.basket = Button(self, text="Basket", width=30, command=self._root_frame.show_basket)
+
 		self.quit = Button(self, text="QUIT", fg="red", width=30, command=self.quit)
 
 		self.title.pack(side="top")
@@ -35,6 +38,9 @@ class MenuFrame(BaseFrame):
 			
 		self.restaurants.pack()
 		self.profile.pack()
+
+        self.orders.pack()
+        self.basket.pack()
 
 		self.quit.pack(side="bottom")
 

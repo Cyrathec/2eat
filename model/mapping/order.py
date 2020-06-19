@@ -19,7 +19,7 @@ class Order(Base):
     id = Column(Integer, primary_key=True)
 
     restaurant = Column(Integer, ForeignKey('Restaurant.id'))                                       # ForeignKey to the Restaurant id
-    client = Column(Integer, ForeignKey('Person.id'))                                               # ForeignKey to the client id
+    client = Column(String(36), ForeignKey('List_people.id'))                                       # ForeignKey to the client id
     address = Column(String(512), nullable=False)                                                   # Shipment address
     products = relationship("Product", secondary="OrderProductAssociation", backref="Order")        # List of the products that will be shipped
     price = Column(Float(), nullable=False)                                                         # Total price of the order
