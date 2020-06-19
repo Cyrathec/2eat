@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2020 INKARI Marc, LAURENCE Camille, DIDIER Loïc, MEMPONTEIL Aude and BEASSE Maxime
+Copyright (c) 2020 INKARI Marc, LAURENCE Camille, DIDIER Loïc, MEMPONTEIL Aude, HOCHARD Adrien and BEASSE Maxime
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
