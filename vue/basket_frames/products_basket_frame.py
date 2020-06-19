@@ -5,12 +5,11 @@ from vue.base_frame import BaseFrame
 from controller.product_controller import ProductController
 
 
-class ListProductsFrame(BaseFrame):
+class ProductsBasketFrame(BaseFrame):
 	
-	def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None, isAdmin=None):
+	def __init__(self, product_controller: ProductController, root_frame: Frame, restaurant=None):
 		super().__init__(root_frame)
 		self._product_controller = product_controller
-		self._is_admin = isAdmin
 		self._products = None
 		self._restaurant = restaurant
 		self._create_widgets()
@@ -29,29 +28,24 @@ class ListProductsFrame(BaseFrame):
 		self.listbox.grid(row=1, column=0, columnspan=2, sticky='nsew')
 
 		# Return bouton
-		if self._is_admin == True :
-			self.new_product_button = Button(self, text="New Product", command=self._root_frame.new_product)
-			self.show_product_button = Button(self, text="Show profile", command=self.show_product)
+		self.add_to_basket_button = Button(self, text="Add to Basket", command=self.add_to_basket)
 		self.menu = Button(self, text="Return", fg="red",
 						   command=self.show_menu)
-		if self._is_admin == True :
-			self.new_product_button.grid(row=3, sticky="nsew")
 		self.menu.grid(row=4, column=0, sticky="w")
 
 	def on_select(self, event):
 		if len(self.listbox.curselection()) == 0:
-			self.show_product_button.grid_forget()
+			self.add_to_basket_button.grid_forget()
 		else:
-			if self._is_admin:
-				self.show_product_button.grid(row=3, column=1, sticky="nsew")
+			self.add_to_basket_button.grid(row=3, sticky="nsew")
 
-	def show_product(self):
+	def add_to_basket(self):
 		if len(self.listbox.curselection()) == 0:
-			self.show_product_button.grid_forget()
+			self.add_to_basket_button.grid_forget()
 		else:
 			index = int(self.listbox.curselection()[0])
 			product = self._products[index]
-			self._root_frame.show_product(product['id'])
+			self._root_frame.add_to_basket(product['id'], self._restaurant.get('id'))
 
 	def show(self):
 		if self._restaurant is None:

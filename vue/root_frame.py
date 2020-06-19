@@ -15,6 +15,11 @@ from vue.person_frames.person_profile_frame import PersonProfileFrame
 from vue.auth_portal import AuthPortal
 
 from vue.basket_frames.basket_frame import BasketFrame
+from vue.basket_frames.restaurant_basket_frame import RestaurantBasketFrame
+from vue.basket_frames.products_basket_frame import ProductsBasketFrame
+
+from vue.order_frames.list_order_frame import ListOrderFrame
+from vue.order_frames.show_order_frame import ShowOrderFrame
 
 from vue.connexion_frame import ConnexionFrame
 
@@ -93,6 +98,16 @@ class RootFrame(Frame):
         profile_frame = ProductProfileFrame(self._product_controller, product_data, self, isAdmin=self._user.get("isAdmin"))
         self._frames.append(profile_frame)
         profile_frame.show()
+    
+    def create_basket(self):
+        if self._basket_controller.getBasket(0) == []:
+            self.hide_menu()
+            self.hide_frames()
+            restaurant_basket_frame = RestaurantBasketFrame(self._restaurant_controller, self)
+            self._frames.append(restaurant_basket_frame)
+            restaurant_basket_frame.show()
+        else:
+            self.show_basket()
 
     def show_basket(self):
         self.hide_menu()
@@ -100,17 +115,39 @@ class RootFrame(Frame):
         self._frames.append(basket_frame)
         basket_frame.show()
 
+    def choose_restaurant_basket(self, restaurant_id): # list product
+        if self._basket_controller.getBasket(0) == []:
+            self._basket_controller.createBasket(restaurant_id, self._user['id'], self._user['address'])
+
+        restaurant_data = self._restaurant_controller.get_restaurant(restaurant_id)
+
+        self.hide_frames()
+        products_basket_frame = ProductsBasketFrame(self._product_controller, self, restaurant_data)
+        self._frames.append(products_basket_frame)
+        products_basket_frame.show()
+
     def add_to_basket(self, product_id, restaurant_id):
-        product_data = self._product_controller.get_product(product_id)
+        product= self._product_controller.get_product(product_id)
         if self._basket_controller.getBasket(0) != []:
-            self._basket_controller.addProduct(0, product_data)
+            self._basket_controller.addProduct(0, product)
         else:
             basket = self._basket_controller.createBasket(restaurant_id, self._user['id'], self._user['address'])
             self._basket_controller.addProduct(basket['id'], product_data)
 
-    def order_basket(self, basket):
-        order_frame = order_frame(self._order_controller, self)
-        self._order_controller
+    def order_basket(self, basket): # passer les objets produits et non le dict ?
+        self._order_controller.createOrder(basket)
+
+    def show_orders(self):
+        self.hide_menu()
+        list_order_frame = ListOrderFrame(self._order_controller, self._user['id'], self)
+        self._frames.append(list_order_frame)
+        list_order_frame.show()
+
+    def show_order(self, order):
+        self.hide_frames()
+        show_order_frame = ShowOrderFrame(self._order_controller, order, self)
+        self._frames.append(show_order_frame)
+        show_order_frame.show()
         
     def show_person(self, person_id, editable=False):
         person_data = self._person_controller.get_person(person_id)

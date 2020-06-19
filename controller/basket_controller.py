@@ -42,7 +42,10 @@ class BasketController:
         return self.baskets[id].toDict()
 
     def delProduct(self, id, product):
-        self.baskets[id].delProduct(product)
+        if type(product) is int:
+            self.baskets[id].delProductAtIndex(product)
+        else:
+            self.baskets[id].delProduct(product)
         return self.baskets[id].toDict()
 
     def updateRestaurant(self, id, restaurant):

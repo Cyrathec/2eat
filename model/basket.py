@@ -10,7 +10,7 @@ class Basket():
         self.price = 0                                      # Total price of the order
 
     # Add a product to the basket
-    def addProduct(self, product: dict):
+    def addProduct(self, product):
         self.products.append(product)
         self.price += product['price']
     
@@ -21,7 +21,12 @@ class Basket():
             if p == product:
                 self.products.pop(i)
                 self.price -= product['price']
+                return
             i += 1
+
+    def delProductAtIndex(self, index):
+        self.price -= self.products[index]['price']
+        self.products.pop(index)
 
     # Update the restaurant id
     def updateRestaurant(self, restaurant: str):
