@@ -4,6 +4,7 @@ import logging
 from model.dao.person_dao import PersonDAO
 from sqlalchemy import *
 
+import hashlib
 
 from exceptions import Error, InvalidData
 from model.mapping.person import Person
@@ -44,11 +45,8 @@ class PersonController:
                 dao = PersonDAO(session)
                
                 person = session.query(Person).filter_by(email=data.get('email')).all()
-                if len(person) > 0:
-
-                     
-                     raise InvalidData("Mail already existing")
-                
+                if len(person) > 0:              
+                     raise InvalidData("Mail already existing") 
 
                 member = dao.create(data)
                 member_data = member.to_dict()
@@ -65,7 +63,7 @@ class PersonController:
         logging.info("Connexion with email %s" % str(email))
         with self._database_engine.new_session() as session:
             dao = PersonDAO(session)
-            pwd = password #str(hash(password))
+            pwd = str(hashlib.sha256(password.encode('utf8')).hexdigest())
             
             try:
                 person = session.query(Person).filter_by(email=email).one()
@@ -111,21 +109,15 @@ class PersonController:
             member = dao.get_by_name(firstname, lastname)
             return member.to_dict()
 
-    def _check_member_data(self, data, update=False):
-        self._check_person_data(data, update=update)
-        specs = {
-            
-        }
-        self._check_data(data, specs, update=update)
-
     def _check_person_data(self, data, update=False):
         name_pattern = re.compile("^[\S-]{2,50}$")
+        password_pattern = re.compile("^[\S-]{2,256}$")
         email_pattern = re.compile("^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$")
         specs = {
             'firstname': {"type": str, "regex": name_pattern},
             'lastname': {"type": str, "regex": name_pattern},
             'email': {"type": str, "regex": email_pattern},
-            'password': {"type": str, "regex": name_pattern}
+            'password': {"type": str, "regex": password_pattern}
         }
         self._check_data(data, specs, update=update)
 

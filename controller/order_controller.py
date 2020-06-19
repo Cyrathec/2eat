@@ -80,7 +80,7 @@ class OrderController:
 
     # Delete a specific order by its id
     def deleteOrder(self, order_id):
-        logging.info("Delete person %s" % order_id)
+        logging.info("Delete order %s" % order_id)
         with self._database_engine.new_session() as session:
             dao = OrderDAO(session)
             order = dao.get(order_id)

@@ -20,6 +20,7 @@ from vue.basket_frames.products_basket_frame import ProductsBasketFrame
 
 from vue.order_frames.list_order_frame import ListOrderFrame
 from vue.order_frames.show_order_frame import ShowOrderFrame
+from vue.order_frames.list_admin_order_frame import ListAdminOrderFrame
 
 from vue.connexion_frame import ConnexionFrame
 
@@ -137,15 +138,21 @@ class RootFrame(Frame):
     def order_basket(self, basket): # passer les objets produits et non le dict ?
         self._order_controller.createOrder(basket)
 
+    def list_orders(self):
+        self.hide_menu()
+        list_admin_order_frame = ListAdminOrderFrame(self._order_controller, self)
+        self._frames.append(list_admin_order_frame)
+        list_admin_order_frame.show()
+
     def show_orders(self):
         self.hide_menu()
         list_order_frame = ListOrderFrame(self._order_controller, self._user['id'], self)
         self._frames.append(list_order_frame)
         list_order_frame.show()
 
-    def show_order(self, order):
+    def show_order(self, order, isAdmin=False):
         self.hide_frames()
-        show_order_frame = ShowOrderFrame(self._order_controller, order, self)
+        show_order_frame = ShowOrderFrame(self._order_controller, order, self, isAdmin)
         self._frames.append(show_order_frame)
         show_order_frame.show()
         

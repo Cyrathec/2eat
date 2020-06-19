@@ -30,4 +30,4 @@ class NewPersonFrame(PersonFormularFrame):
             messagebox.showerror("Error", str(e))
             return
 
-        self.show_menu(data)
+        self.show_menu(member_data)
