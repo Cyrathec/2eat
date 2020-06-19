@@ -32,7 +32,6 @@ class RootFrame(Frame):
         self._person_controller = person_controller
         self._basket_controller = basket_controller
         self._order_controller = order_controller
-        self._client = []
         self._menu_frame = []
         self._frames = []
 
@@ -106,7 +105,7 @@ class RootFrame(Frame):
         if self._basket_controller.getBasket(0) != []:
             self._basket_controller.addProduct(0, product_data)
         else:
-            basket = self._basket_controller.createBasket(restaurant_id, self._client['id'], self._client['address'])
+            basket = self._basket_controller.createBasket(restaurant_id, self._user['id'], self._user['address'])
             self._basket_controller.addProduct(basket['id'], product_data)
 
     def order_basket(self, basket):

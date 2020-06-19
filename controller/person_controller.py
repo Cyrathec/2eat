@@ -44,7 +44,7 @@ class PersonController:
                 dao = PersonDAO(session)
                
                 person = session.query(Person).filter_by(email=data.get('email')).all()
-                if person:
+                if len(person) > 0:
 
                      
                      raise InvalidData("Mail already existing")

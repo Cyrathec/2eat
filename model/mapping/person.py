@@ -7,7 +7,7 @@ from exceptions import ResourceNotFound
 
 
 class Person(Base):
-    __tablename__ = 'People'
+    __tablename__ = 'Person'
 
     id = Column(String(36), default=str(uuid.uuid4()), primary_key=True)
 

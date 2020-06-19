@@ -62,7 +62,7 @@ class ListProductsFrame(BaseFrame):
 		else:
 			index = int(self.listbox.curselection()[0])
 			product = self._products[index]
-			self._root_frame.add_to_basket(product['id'], self._restaurant['id'])
+			self._root_frame.add_to_basket(product['id'], self._restaurant.get('id'))
 
 	def show(self):
 		if self._restaurant is None:
