@@ -11,21 +11,11 @@ test
 pip install -r requirements.txt
 ```
 
-Groupe de 4-5 personnes maximum
-
-● Réaliser un dossier de votre applicatif comprenant :
-    – Une présentation de votre équipes & rôles
-    – Une explication de votre applicatif et ses fonctionnalités
-    – Un diagramme des cas d’utilisations
-    – Un diagramme de classe
-    – Un diagramme séquentiel
-    – Une explication organisationnel de votre organisation de travail (organisation de git,
-      répartition de vos taches, etc.)
-● Réaliser un applicatif de votre choix en python :
-    – Comprenant une base de donnée
-    – MVC
-    – Comprenant 3-4 fonctionnalités simples
-    – Utilisant Tkinter ou une API REST
-
-Rendu : 19 Juin, 00h00 => Archive comprenant le code source ainsi que
-le git du projet + dossier de votre applicatif à déposer sur moodle
+L’application se prénomme 2eat. Elle permet à un utilisateur de commander via l’application un repas dans un des restaurants partenaires. 
+L’utilisateur peut se connecter ou s’inscrire sur l’application. Il accède ensuite à la liste des restaurants proposants un service en livraison. Il peut alors commander plusieurs produits avant de finaliser sa commande. Il peut modifier son adresse de livraison s’il elle est différente de celle renseignée lors de l’inscription.
+Il peut changer de restaurant au cours d’une commande et recommencer ainsi sa commande depuis le début.
+Il peut supprimer son panier ou commander. 
+Il peut consulter son panier directement et rajouter des produits depuis le panier.
+Un utilisateur peut mettre à jour ses informations et voir l’historique de ses commandes.
+L’administrateur peut consulter la liste et les profils des utilisateurs inscrits sur l’application. Il peut rajouter, mettre à jour ou supprimer un restaurant et ses produits. L’identifiant de l’administrateur est : admin@a.aa et son mot de passe : admin 
+L’utilisateur possède les mêmes fonctionnalités que l’utilisateur.
