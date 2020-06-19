@@ -2,15 +2,14 @@
 from tkinter import *
 
 from vue.base_frame import BaseFrame
-from controller.basket_controller import BasketController
+from controller.order_controller import OrderController
 
 
 class BasketFrame(BaseFrame):
 	
-	def __init__(self, basket_controller: BasketController, master=None):
+	def __init__(self, order_controller : OrderController, master=None):
 		super().__init__(master)
-		self._basket_controller = basket_controller
-		self._basket = self._basket_controller.getBasket(0) # possibilité d'avoir plusieur panier, pas de logique dans le programme donc on laisse toujours à 0
+		self._order_controller = order_controller
 		self._create_widgets()
 
 	def _create_widgets(self):
@@ -91,3 +90,6 @@ class BasketFrame(BaseFrame):
 		self._root_frame.order_basket(self._basket)
 		self.clear()
 		messagebox.showinfo("Basket Ordered", "Your basket as been ordered, thanks for your purchase !")
+
+	def order_basket(self, basket):
+		order_controller.createOrder(basket)

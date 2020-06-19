@@ -66,7 +66,7 @@ class PersonController:
                 person = session.query(Person).filter_by(email=email).one()
                 if pwd == person.password:
                     logging.info("Connexion success %s %s" % (str(person.firstname), str(person.lastname)))
-                    return person
+                    return person.to_dict()
                 else:
                     logging.info("Wrong id, try again")
                     return {0}

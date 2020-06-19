@@ -4,6 +4,7 @@ from model.database import DatabaseEngine
 from controller.restaurant_controller import RestaurantController
 from controller.product_controller import ProductController
 from controller.basket_controller import BasketController
+from controller.order_controller import OrderController
 
 from controller.person_controller import PersonController
 from vue.root_frame import RootFrame
@@ -32,8 +33,9 @@ def main():
 	product_controller = ProductController(database_engine)
 	person_controller = PersonController(database_engine)
 	basket_controller = BasketController(database_engine)
+	order_controller = OrderController(database_engine)
 	# init vue
-	root = RootFrame(restaurant_controller, product_controller, person_controller, basket_controller)
+	root = RootFrame(restaurant_controller, product_controller, person_controller, basket_controller, order_controller)
 	root.master.title("2eat subscription app")
 	root.show_members()
     

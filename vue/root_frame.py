@@ -23,12 +23,14 @@ class RootFrame(Frame):
     help: http://www.xavierdupre.fr/app/teachpyx/helpsphinx/c_gui/tkinter.html
     """
 
-    def __init__(self, restaurant_controller, product_controller, person_controller, basket_controller, master=None):
+    def __init__(self, restaurant_controller, product_controller, person_controller, basket_controller, order_controller, master=None):
         super().__init__(master)
         self._restaurant_controller = restaurant_controller
         self._product_controller = product_controller
         self._person_controller = person_controller
         self._basket_controller = basket_controller
+        self._order_controller = order_controller
+        self._client = []
         self._menu_frame = []
         self._frames = []
 
@@ -82,7 +84,7 @@ class RootFrame(Frame):
         list_frame.show()
 
     def show_product(self, product_id):
-        product_data = self._product_controller.get_product(product_id) #TODO envoyer le produit a launch.py je supposes
+        product_data = self._product_controller.get_product(product_id)
 
         self.hide_frames()
         profile_frame = ProductProfileFrame(self._product_controller, product_data, self)
@@ -100,8 +102,12 @@ class RootFrame(Frame):
         if self._basket_controller.getBasket(0) != []:
             self._basket_controller.addProduct(0, product_data)
         else:
-            basket = self._basket_controller.createBasket("44fe59ab-f189-4827-90b8-43ad314fbb67", restaurant_id, "") # ici il faudra remplacer par (restaurant_id, client_id, address) l'address et le restaurant peuvent être changés
+            basket = self._basket_controller.createBasket(restaurant_id, self._client['id'], self._client['address'])
             self._basket_controller.addProduct(basket['id'], product_data)
+
+    def order_basket(self, basket):
+        order_frame = order_frame(self._order_controller, self)
+        self._order_controller
         
     def show_members(self):
         #self.hide_menu()
@@ -126,10 +132,12 @@ class RootFrame(Frame):
         for frame in self._frames:
             frame.hide()
 
-    def show_menu(self,member=None):
+    def show_menu(self, member=None):
         for frame in self._frames:
             frame.destroy()
-        self._menu_frame = MenuFrame(self,member)
+        if self._client == [] or self._client == None:
+            self._client = member
+        self._menu_frame = MenuFrame(self, self._client)
         self._frames = []
         self._menu_frame.show()
 

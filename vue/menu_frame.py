@@ -3,7 +3,7 @@ from vue.base_frame import BaseFrame
 
 
 class MenuFrame(BaseFrame):
-    def __init__(self, root_frame,person=None ,isAdmin=False):
+    def __init__(self, root_frame, person=None, isAdmin=False):
         super().__init__(root_frame)
         self._is_admin = isAdmin
         self.person = person
