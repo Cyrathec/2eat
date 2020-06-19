@@ -2,7 +2,6 @@ from model.mapping import Base
 import uuid
 
 from sqlalchemy import Column, Integer, String, Float, UniqueConstraint, ForeignKey
-from sqlalchemy.orm import relationship
 
 class Product(Base):
     __tablename__ = 'Product'

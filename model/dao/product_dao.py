@@ -1,5 +1,6 @@
 from model.mapping.product import Product
-from model.mapping.restaurant import Restaurant
+from model.mapping.restaurant import Restaurant, RestaurantProductAssociation
+from model.mapping.order import Order, OrderProductAssociation
 from model.dao.dao import DAO
 from model.dao.dao_error_handler import dao_error_handler
 
@@ -47,4 +48,7 @@ class ProductDAO(DAO):
 
 	@dao_error_handler
 	def delete(self, entity):
+		self._database_session.query(RestaurantProductAssociation).filter(RestaurantProductAssociation.Product_id==entity.id).delete()
+		self._database_session.query(OrderProductAssociation).filter(OrderProductAssociation.Product_id==entity.id).delete()
+		self._database_session.commit()
 		self._database_session.delete(entity)

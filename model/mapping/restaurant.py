@@ -23,7 +23,7 @@ class Restaurant(Base):
 	id = Column(Integer, primary_key=True)
 	name = Column(String(50), nullable=False)
 	address = Column(String(512), nullable=False)
-	products = relationship("RestaurantProductAssociation")
+	products = relationship("RestaurantProductAssociation", cascade="all, delete-orphan")
 
 	def __repr__(self):
 		return "<Restaurant(%s %s)>" % (self.name, self.adress)
